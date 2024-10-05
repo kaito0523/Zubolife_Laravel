@@ -16,6 +16,7 @@ class Recipe extends Model
         'ingredients',
         'instructions',
         'reference_url',
+        'user_id'
     ];
 
     public function user()
