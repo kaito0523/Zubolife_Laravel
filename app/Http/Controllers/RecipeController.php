@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
