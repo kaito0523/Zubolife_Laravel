@@ -12,18 +12,18 @@ class RecipeController extends Controller
     public function index()
     {   
         $recipes = Recipe::all();
-        return view('recipeList', ['recipes' => $recipes]);
+        return view('Recipes.recipeList', ['recipes' => $recipes]);
     }
 
     public function show($id)
     {
         $recipe = Recipe::findOrFail($id);
-        return view('recipeShow', ['recipe' => $recipe]);
+        return view('Recipes.recipeShow', ['recipe' => $recipe]);
     }
 
     public function create()
     {
-        return view('recipeCreate');
+        return view('Recipes.recipeCreate');
     }
 
     public function store(Request $request)

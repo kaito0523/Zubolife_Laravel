@@ -11,13 +11,13 @@ class ShoppingMemoController extends Controller
     public function index()
     {
         $Memos = ShoppingMemo::all();
-        return view('MemoList', ['Memos' => $Memos]);
+        return view('Memos.memoList', ['Memos' => $Memos]);
     }
 
     public function show($id)
     {
         $Memo = ShoppingMemo::findOrFail($id);
-        return view('MemoShow', ['Memo' => $Memo]);
+        return view('Memos.memoShow', ['Memo' => $Memo]);
     }
 
     public function create($recipeId = null)
@@ -26,7 +26,7 @@ class ShoppingMemoController extends Controller
         if($recipeId){
             $recipe = Recipe::findOrFail($recipeId);
         }
-        return view('Memo.memoCreate', ['recipe' => $recipe]);
+        return view('Memos.memoCreate', ['recipe' => $recipe]);
     }
 
     public function store(Request $request)

@@ -13,7 +13,7 @@ class FavoriteController extends Controller
     public function index()
     {   
         $favorites = Auth::user()->favorites()-with('recipe')-get();
-        return view('recipeFavorite', ['favorites' => $favorites]);
+        return view('Favorites.recipeFavorite', ['favorites' => $favorites]);
     }
 
     public function store($recipeId)
