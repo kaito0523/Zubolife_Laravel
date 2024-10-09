@@ -17,10 +17,10 @@ class AuthController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        User::Create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
         ]);
 
         return redirect()->route('recipes.index');
@@ -29,13 +29,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required|email'],
-            'password' => ['required|min:6'],
+            'email' => 'required|email',
+            'password' => 'required|min:6',
         ]);
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->intended('recipes/home');
+            return redirect()->intended(route('recipes.index'));
         }
 
         return back()->withErrors([
@@ -50,6 +50,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('recipes/home');
+        return redirect()->route('recipes.index');
     }
 }

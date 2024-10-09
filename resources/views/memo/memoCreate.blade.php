@@ -34,7 +34,7 @@
             {{-- コンテンツ欄 --}}
             <div class="form-group">
                 <label for="content">メモの内容:</label>
-                <textarea class="form-control" name="content" id="content" rows="4" required></textarea>
+                <textarea class="form-control" name="content" id="content" rows="4" required>{{ old('content', $content)}}</textarea>
             </div>
 
             {{-- メモの保存ボタン --}}

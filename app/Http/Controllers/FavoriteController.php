@@ -9,11 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {   
-        $favorites = Auth::user()->favorites()-with('recipe')-get();
-        return view('Favorites.recipeFavorite', ['favorites' => $favorites]);
+        $favorites = Auth::user()->favorites()-with('recipe')->get();
+        return view('favorite.recipeFavorite', ['favorites' => $favorites]);
     }
 
     public function store($recipeId)

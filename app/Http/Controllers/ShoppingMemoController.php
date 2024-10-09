@@ -7,26 +7,33 @@ use App\Models\ShoppingMemo;
 use App\Models\Recipe;
 
 class ShoppingMemoController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $Memos = ShoppingMemo::all();
-        return view('Memos.memoList', ['Memos' => $Memos]);
+        return view('memo.memoList', compact($Memos));
     }
 
     public function show($id)
     {
         $Memo = ShoppingMemo::findOrFail($id);
-        return view('Memos.memoShow', ['Memo' => $Memo]);
+        return view('memo.memoShow', compact($Memo));
     }
 
     public function create($recipeId = null)
     {   
         $recipe = null;
+        $content = '';
         if($recipeId){
             $recipe = Recipe::findOrFail($recipeId);
+            $content = $recipe->ingredients;
         }
-        return view('Memos.memoCreate', ['recipe' => $recipe]);
+        return view('memo.memoCreate', compact('recipe', 'content'));
     }
 
     public function store(Request $request)
@@ -37,7 +44,7 @@ class ShoppingMemoController extends Controller
             'content' => 'required|string',
         ]);
 
-        $request->ShoppingMemo::create([
+        ShoppingMemo::create([
             'content' => $request->content,
             'title' => $request->title,
             'user_id' => auth()->id(),

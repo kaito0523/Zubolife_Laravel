@@ -14,6 +14,15 @@
                 <li><a href="{{ route('favorites.index')}}">お気に入り</a></li>
                 <li><a href="{{ route('memos.index')}}">メモ一覧</a></li>
             </ul>
+            @auth
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit">ログアウト</button>
+            </form>
+            @else
+            <a href="{{ route('login.index') }}">ログイン</a>
+            <a href="{{ route('register.index') }}">登録</a>
+            @endauth
         </nav>
     </header>
     <div>

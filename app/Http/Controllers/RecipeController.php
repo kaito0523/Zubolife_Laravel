@@ -3,27 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     public function index()
     {   
         $recipes = Recipe::all();
-        return view('Recipes.recipeList', ['recipes' => $recipes]);
+        return view('recipe.recipeList', compact($recipes));
     }
 
     public function show($id)
     {
         $recipe = Recipe::findOrFail($id);
-        return view('Recipes.recipeShow', ['recipe' => $recipe]);
+        return view('recipe.recipeShow', compact($recipe));
     }
 
     public function create()
     {
-        return view('Recipes.recipeCreate');
+        return view('recipe.recipeCreate');
     }
 
     public function store(Request $request)
@@ -35,7 +39,6 @@ class RecipeController extends Controller
             'ingredients' => 'required|string',
             'instruction' => 'required|string',
             'reference_url' => 'nullable|url',
-            'user_id' => 'required|exists:users,id'
         ]);
 
         $imagePath = null;
