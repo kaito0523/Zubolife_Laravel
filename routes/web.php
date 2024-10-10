@@ -27,7 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/memos', [ShoppingMemoController::class, 'index'])->name('memos.index');
     Route::get('/memos/show/{id}', [ShoppingMemoController::class, 'show'])->name('memos.show');
     Route::get('memos/create', [ShoppingMemoController::class, 'create'])->name('memos.create');
+    Route::get('memos/create/recipe/{recipeId}', [ShoppingMemoController::class, 'createFromRecipe'])->name('memos.createFromRecipe');
     Route::post('memos/store', [ShoppingMemoController::class, 'store'])->name('memos.store');
+    Route::delete('memos/destroy/{id}', [ShoppingMemoController::class, 'destroy'])->name('memos.destroy');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

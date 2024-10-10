@@ -8,21 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {   
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['index', 'show']);
-    }
-
     public function index()
     {   
         $recipes = Recipe::all();
-        return view('recipe.recipeList', compact($recipes));
+        return view('recipe.recipeList', compact('recipes'));
     }
 
     public function show($id)
     {
         $recipe = Recipe::findOrFail($id);
-        return view('recipe.recipeShow', compact($recipe));
+        return view('recipe.recipeShow', compact('recipe'));
     }
 
     public function create()
@@ -37,7 +32,7 @@ class RecipeController extends Controller
             'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required|string',
             'ingredients' => 'required|string',
-            'instruction' => 'required|string',
+            'instructions' => 'required|string',
             'reference_url' => 'nullable|url',
         ]);
 
@@ -50,11 +45,12 @@ class RecipeController extends Controller
             'image' => $imagePath,
             'description' => $request->description,
             'ingredients' => $request->ingredients,
-            'instruction' => $request->instruction,
+            'instructions' => $request->instructions,
             'reference_url' => $request->reference_url,
             'user_id' => auth()->id()
         ]);
 
         return redirect()->route('recipes.index');
     }
+
 }

@@ -28,13 +28,19 @@
             {{-- タイトル欄 --}}
             <div class="form-group">
                 <label for="title">メモのタイトル:</label>
-                <input type="text" class="form-control" name="title" id="title" required>
+                <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $date . "の買い物メモ")}}" required>
+                @error('title')
+                    <div>{{ $message }}</div>
+                @enderror
             </div>
 
             {{-- コンテンツ欄 --}}
             <div class="form-group">
                 <label for="content">メモの内容:</label>
                 <textarea class="form-control" name="content" id="content" rows="4" required>{{ old('content', $content)}}</textarea>
+                @error('title')
+                    <div>{{ $massage }}</div>
+                @enderror
             </div>
 
             {{-- メモの保存ボタン --}}

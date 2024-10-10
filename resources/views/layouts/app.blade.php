@@ -19,6 +19,7 @@
                 @csrf
                 <button type="submit">ログアウト</button>
             </form>
+            <a href="{{ route('profile.index') }}">MYプロフィール</a>
             @else
             <a href="{{ route('login.index') }}">ログイン</a>
             <a href="{{ route('register.index') }}">登録</a>

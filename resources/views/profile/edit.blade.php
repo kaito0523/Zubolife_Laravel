@@ -1,11 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-    <h1>レシピ編集</h1>
-    <form action="{{ route('profile.updateRecipe', $recipe->id) }}" mathod="POST">
+    <h1>プロフィール編集</h1>
+    <form action="{{ route('profile.update')}}" method="POST">
         @csrf
-        <label for="title">料理名</label>
-        <input type="text" name="title" id="title" value="{{ old('title', $request->title) }}">
+        @method('PATCH')
+        <label for="name">名前：</label>
+        <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
+        @error('name')
+            <div style="color:red;">{{ $message }}</div>  
+        @enderror
+        <label for="email">メールアドレス：</label>
+        <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
+        @error('email')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <label for="password">パスワード：</label>
+        <input type="password" name="password" id="password">
+        @error('password')
+            <div style="color:red;">{{ $message }}</div>
+        @enderror
+        <button type="submit">変更する</button>
     </form>
-</div>
+@endsection

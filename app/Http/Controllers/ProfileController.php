@@ -13,7 +13,7 @@ class ProfileController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $user = Auth::user();
@@ -34,7 +34,7 @@ class ProfileController extends Controller
         
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email,' . $user->id, 
             'password' => 'nullable|min:6'
         ]);
 
@@ -75,7 +75,7 @@ class ProfileController extends Controller
             'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required|string',
             'ingredients' => 'required|string',
-            'instruction' => 'required|string',
+            'instructions' => 'required|string',
             'reference_url' => 'nullable|url',
         ]);
 
@@ -98,7 +98,7 @@ class ProfileController extends Controller
         $recipe = Recipe::findOrFail($id);
 
         if($recipe->user_id !== Auth::id()){
-            abort('403', 'レシピを削除する権限がありません');
+            abort(403, 'レシピを削除する権限がありません');
         }
 
         $recipe->delete();

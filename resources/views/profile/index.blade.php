@@ -13,11 +13,14 @@
     <ul>
         @foreach($recipes as $recipe)
         <li>
+            <a href="{{ route('recipes.show', $recipe->id)}}">
             <strong>{{ $recipe->title }}</strong>
             <img src="{{ $recipe->image }}" alt="">
-            <a href="{{ route('profile.editRecipe') }}">編集</a>
-            <form action="{{ route('profile.destroyRecipe') }}">
+            </a>
+            <a href="{{ route('profile.editRecipe', $recipe->id) }}">編集</a>
+            <form action="{{ route('profile.destroyRecipe', $recipe->id) }}" method="POST">
                 @csrf
+                @method('DELETE')
                 <button type="submit" onclick="return confirm('本当に削除しますか？')">レシピを削除</button>
             </form>
         </li>
