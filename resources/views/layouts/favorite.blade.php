@@ -32,8 +32,8 @@
     }
     </script>
 </head>
-<body class="font-sans text-[#424242] bg-[#F9F9F6]">
-    <header class="bg-[#F9F9F6] sticky top-0 border-b-2 border-[#dcdddd] ">
+<body class="font-sans text-[#424242]">
+    <header class="bg-gradient-to-b from-[#FFF6CC] to-[#FFFFFF] sticky top-0 border-b-2 border-[#dcdddd]">
         <nav class="p-5">
             <div class="container mx-auto flex justify-between items-center">
                 <div class="font-bold text-xl [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
@@ -43,13 +43,13 @@
                     <ul class="flex space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
                         <li>
                             <a href="{{ route('recipes.index') }}" 
-                                class="border-b-2 border-[#FFAA85] block transform transition hover:-translate-y-1">
+                                class="block transform transition hover:-translate-y-1">
                                 レシピ一覧 <i class="fa-solid fa-utensils"></i>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('favorites.index') }}" 
-                                class="block transform transition  hover:-translate-y-1">
+                                class="border-b-2 border-[#ebd842]  block transform transition hover:-translate-y-1">
                                 お気に入り <i class="fa-solid fa-star"></i>
                             </a>
                         </li>

@@ -60,6 +60,23 @@ class ShoppingMemoController extends Controller
 
     }
 
+    public function update(Request $request, $id)
+    {
+        $memo = ShoppingMemo::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
+
+        $memo->title = $request->title;
+        $memo->content = $request->content;
+
+        $memo->save();
+
+        return redirect()->route('memos.index')->with('message', 'メモを更新しました');
+    }
+
     public function destroy($id)
     {
         $memo = ShoppingMemo::findOrFail($id);

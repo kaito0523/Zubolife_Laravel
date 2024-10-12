@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.favorite')
 
 @section('content')
     <div class="flex gap-20 justify-center mb-14 p-14 ">
@@ -6,9 +6,9 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mx-20 px-10">
         @foreach($favorites as $favorite)
-            <div class="bg-gradient-to-b from-white to-[#F7F7F7] mb-10 rounded-lg border border-[#E0E0E0] overflow-hidden transform transition hover:-translate-y-1" 
+            <div class="bg-gradient-to-b from-white to-[#F7F7F7] mb-10 rounded-lg border border-[#E0E0E0] overflow-hidden transform transition hover:-translate-y-6" 
                 style="box-shadow: 0 4px 10px rgba(170, 170, 170, 0.5);"
-                onmouseover="this.style.boxShadow='0 6px 12px #FFAA85';" 
+                onmouseover="this.style.boxShadow='0 6px 12px ##E0E0E0';" 
                 onmouseout="this.style.boxShadow='0 4px 10px rgba(170, 170, 170, 0.5)';">
                 <a href="{{ route('recipes.show', $favorite->recipe->id) }}">
                     @if($favorite->recipe->image)
