@@ -23,7 +23,8 @@ class ShoppingMemoController extends Controller
     public function show($id)
     {
         $memo = ShoppingMemo::findOrFail($id);
-        return view('memo.memoShow', compact('memo'));
+        $memos = Auth::user()->shoppingMemos()->latest()->get();
+        return view('memo.memoShow', compact('memo', 'memos'));
     }
 
     public function create()

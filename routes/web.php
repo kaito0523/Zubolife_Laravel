@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('memos/create', [ShoppingMemoController::class, 'create'])->name('memos.create');
     Route::get('memos/create/recipe/{recipeId}', [ShoppingMemoController::class, 'createFromRecipe'])->name('memos.createFromRecipe');
     Route::post('memos/store', [ShoppingMemoController::class, 'store'])->name('memos.store');
-    Route::patch('memos/update', [ShoppingMemoController::class, 'update'])->name('memos.update');
+    Route::patch('/memos/{id}', [ShoppingMemoController::class, 'update'])->name('memos.update');
     Route::delete('memos/destroy/{id}', [ShoppingMemoController::class, 'destroy'])->name('memos.destroy');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

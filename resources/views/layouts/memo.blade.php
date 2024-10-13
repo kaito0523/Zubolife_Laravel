@@ -14,12 +14,14 @@
         theme: {
             extend: {
             colors: {
-                'custom-orange': '#FF7043',
             },
             fontFamily: {
-                sans: ['"Kosugi Maru"', 'sans-serif'],
+                kosugi: ['"Kosugi Maru"', 'sans-serif'],
+                sans: ['"Noto Sans JP"', 'sans-serif'],
+                heading: ['"Roboto"', 'sans-serif'],
                 serif: ['"Noto Serif"', 'serif'],
                 merriweather: ['"Merriweather"', 'serif'],
+                Arial: ["Arial"],
             },
             },
         },
@@ -32,11 +34,11 @@
     }
     </script>
 </head>
-<body class="font-sans text-[#424242] bg-[#FFFFFF]">
+<body class="font-sans text-[#424242] bg-[#ECF0F2]">
     <header class="bg-[#FFFFFF] sticky top-0 border-b-2 border-[#dcdddd] z-50">
         <nav class="p-5">
             <div class="container mx-auto flex justify-between items-center">
-                <div class="font-bold text-xl [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
+                <div class="font-bold text-xl text-[#424242] [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
                     <h1>Zubolife</h1>
                 </div>
                 <div class="flex items-center space-x-6">
@@ -49,13 +51,13 @@
                         </li>
                         <li>
                             <a href="{{ route('favorites.index') }}" 
-                                class="border-b-2 border-[#ebd842]  block transform transition hover:-translate-y-1">
+                                class="block transform transition  hover:-translate-y-1">
                                 お気に入り <i class="fa-solid fa-star"></i>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('memos.index') }}" 
-                                class="block transform transition hover:-translate-y-1">
+                                class="border-b-2 border-[#719bad] block transform transition hover:-translate-y-1">
                                 メモ一覧 <i class="fa-solid fa-file-pen"></i>
                             </a>
                         </li>

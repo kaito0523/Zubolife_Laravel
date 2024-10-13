@@ -1,37 +1,30 @@
-@extends('layouts.app')
+@extends('layouts.memo')
 
 @section('content')
-    <div class="max-w-4xl mx-auto mt-12 px-8">
-        <table class="table-auto w-full border-separate border-spacing-0">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="px-4 py-2 border rounded-tl-lg">タイトル</th>
-                    <th class="px-4 py-2 border">メモ</th>
-                    <th class="px-4 py-2 border">最終更新日時</th>
-                    <th class="px-4 py-2 border rounded-tr-lg"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($memos as $memo)
-                    <tr>
-                        <td class="border px-4 py-2 {{ $loop->last ? 'rounded-bl-lg' : '' }}">{{ $memo->title }}</td>
-                        <td class="border px-4 py-2 line-clamp-1 ">{{ $memo->content }}</td>
-                        <td class="border px-4 py-2">{{ $memo->updated_at->format('Y-m-d H:i') }}</td>
-                        <td class="border px-4 py-2 {{ $loop->last ? 'rounded-br-lg' : '' }}">
-                            <form action="{{ route('memos.destroy', $memo->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">削除</button>
-                            </form>
-                        </td>
-                    </tr>
+<div class="max-w-5xl mx-auto mt-12 h-screen flex flex-col shadow-xl">
+    <div class="flex-grow flex">
+        <!-- 左側のメモ一覧 -->
+        <div class="w-1/3 pr-4 overflow-y-auto py-8 pl-8 border-2 border-[#F7F7F5] rounded-bl-xl rounded-tl-xl bg-[#F7F7F5] h-full">
+            <a href="{{ route('memos.create') }}" class="block my-4 pl-5 text-blue-500">メモを作成する<i class="fa-solid fa-plus"></i></a>
+            <ul class="m-2">
+                @forelse($memos as $memo1)
+                    <li class="py-2 p-4 transform transition hover:-translate-y-1 hover:scale-105 hover:shadow-lg">
+                        <a href="{{ route('memos.show', $memo1->id) }}" class="block">
+                            <h3 class="text-lg font-semibold line-clamp-1">{{ $memo1->title }}</h3>
+                            <span class="text-xs text-gray-500">{{ $memo1->updated_at->format('Y-m-d H:i') }}</span>
+                        </a>
+                    </li>
                 @empty
-                    <tr>
-                        <td colspan="4" class="border px-4 py-2">保存されたメモはありません</td>
-                    </tr>
+                    <li>保存されたメモはありません</li>
                 @endforelse
-            </tbody>
-        </table>
+            </ul>
+        </div>
+
+        <div class="w-2/3 pl-4 bg-[#FFFFFF] p-6 rounded-br-xl rounded-tr-xl h-full flex-grow">
+            <div class="text-center mt-4 text-2xl font-bold">
+                <h2><i class="fa-solid fa-left-long"></i>メモを選択してください</h2>
+            </div>
+        </div>
     </div>
-    <a href="{{ route('memos.create') }}">メモを作成する</a>
+</div>
 @endsection
