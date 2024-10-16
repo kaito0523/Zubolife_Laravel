@@ -29,5 +29,14 @@
         <label for="reference_url">参考にしたもの</label>
         <input type="url" name="reference_url" id="reference_url" value="{{ old('reference_url', $recipe->reference_url) }}">
     </form>
+    <div class="flex justify-end pr-4">
+        <form action="{{ route('profile.destroyRecipe', $recipe->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" onclick="return confirm('本当に削除しますか？')" class="text-red-500 hover:underline">
+                レシピを削除
+            </button>
+        </form>
+    </div>
 </div>
 @endsection

@@ -33,6 +33,7 @@
         plugins: [],
     }
     </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
 <body class="font-sans text-[#424242] bg-[#FFFFFF]">
     <header class="bg-[#FFFFFF] sticky top-0 border-b-2 border-[#dcdddd] z-50">

@@ -35,7 +35,6 @@
                     <textarea name="content" id="content" rows="20" class="resize-none mt-1 block w-full p-2 rounded-md" oninput="autoSave()">{{ old('content', $memo->content) }}</textarea>
                 </div>
 
-                <p id="save-status" class="text-sm text-gray-500"></p>
             </form>
 
             <form action="{{ route('memos.destroy', $memo->id) }}" method="POST" class="mt-4">
@@ -51,7 +50,6 @@
 function autoSave() {
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-    const saveStatus = document.getElementById('save-status');
 
     const memoId = {{ $memo->id }};
 

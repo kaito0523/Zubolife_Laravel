@@ -13,10 +13,18 @@ class Recipe extends Model
         'title',
         'image',
         'description',
+        'cooking_time',
+        'has_dishes',
         'ingredients',
         'instructions',
         'reference_url',
         'user_id'
+    ];
+
+    protected $casts = [
+        'ingredients' => 'array',
+        'instructions' => 'array',
+        'has_dishes' => 'boolean',
     ];
 
     public function user()

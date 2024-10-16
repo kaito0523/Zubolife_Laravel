@@ -1,51 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <div class="container">
-        <h1>メモを作成する</h1>
+@extends('layouts.memo')
 
-        {{-- エラーメッセージの表示 --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+@section('content')
+<div>
+    <div class="max-w-5xl mx-auto mt-12 h-screen shadow-xl">
+        <div class="pl-4 bg-[#FFFFFF] p-6 rounded-lg h-full flex-grow">
+            <form action="{{ route('memos.store') }}" method="POST">
+                @csrf
+                @if($content)
+                <div class="mb-4 border-b">
+                    <label for="title" class="block text-lg font-medium text-gray-700">タイトル</label>
+                    <input type="text" name="title" id="title" value="{{ old('title', $date . "の買い物メモ")}}" class="mt-1 font-bold text-2xl block w-full p-2 rounded-md">
+                    @error('title')
+                        <div>{{ $message }}</div>
+                    @enderror
+                </div>
 
-        {{-- メモ作成フォーム --}}
-        <form action="{{ route('memos.store') }}" method="POST">
-            @csrf
-            
-            {{-- タイトル欄 --}}
-            <div class="form-group">
-                <label for="title">メモのタイトル:</label>
-                <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $date . "の買い物メモ")}}" required>
-                @error('title')
-                    <div>{{ $message }}</div>
-                @enderror
-            </div>
+                <div class="mb-4 border rounded-lg">
+                    <label for="content" class="block text-sm font-medium text-gray-700"></label>
+                    <textarea name="content" id="content" rows="20" class="resize-none mt-1 block w-full p-2 rounded-md" required>{{ old('content', $content) }}</textarea>
+                    @error('content')
+                        <div>{{ $massage }}</div>
+                    @enderror
+                </div>
+                <button type="submit" class="btn btn-primary">メモを保存</button>
+                @else
+                <div class="mb-4 border-b">
+                    <label for="title" class="block text-lg font-medium text-gray-700">タイトル</label>
+                    <input type="text" name="title" id="title" value="{{ old('title')}}" class="mt-1 font-bold text-2xl block w-full p-2 rounded-md">
+                    @error('title')
+                        <div>{{ $message }}</div>
+                    @enderror
+                </div>
 
-            {{-- コンテンツ欄 --}}
-            <div class="form-group">
-                <label for="content">メモの内容:</label>
-                <textarea class="form-control" name="content" id="content" rows="4" required>{{ old('content', $content)}}</textarea>
-                @error('title')
-                    <div>{{ $massage }}</div>
-                @enderror
-            </div>
-
-            {{-- メモの保存ボタン --}}
-            <button type="submit" class="btn btn-primary">メモを保存</button>
-        </form>
+                <div class="mb-4 border rounded-lg">
+                    <label for="content" class="block text-sm font-medium text-gray-700"></label>
+                    <textarea name="content" id="content" rows="20" class="resize-none mt-1 block w-full p-2 rounded-md" required>{{ old('content') }}</textarea>
+                    @error('content')
+                        <div>{{ $massage }}</div>
+                    @enderror
+                </div>
+                <button type="submit" class="btn btn-primary">メモを保存</button>
+                @endif
+            </form>
+        </div>
     </div>
-</body>
-</html>
+</div>
+@endsection

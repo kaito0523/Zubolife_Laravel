@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('image')->nullable();
             $table->text('description');
-            $table->text('ingredients'); //材料
-            $table->text('instructions')->nullable(); //作り方
+            $table->json('ingredients'); //材料
+            $table->json('instructions')->nullable(); //作り方
             $table->string('reference_url')->nullable();
             $table->foreignId('user_id')->constrained()->OnDelete('cascade');
             $table->timestamps();

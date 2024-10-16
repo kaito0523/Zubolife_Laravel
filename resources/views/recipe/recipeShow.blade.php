@@ -1,20 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex flex-col md:flex-row gap-8 mx-20 mt-12 px-10">
+    <div class="flex flex-col md:flex-row gap-8 mx-20 mt-20 px-10">
         <div class="w-full md:w-1/2">
             @if($recipe->image)
                 <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="w-full h-100 object-cover mb-4 shadow-lg shadow-[#D3D3D3]">
             @else
                 <span>画像がありません</span>
             @endif
+            <div class="tags mb-4">
+                @if(!$recipe->has_dishes)
+                    <span class="badge badge-success">洗い物なし</span>
+                @endif
+        
+                @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
+                    <span class="badge badge-info">10分以内でできる</span>
+                @endif
+            </div>
         </div>
         <div class="w-full md:w-1/2">
             <h1 class="inline-block text-4xl text-[#622d18] font-black mb-6">{{ $recipe->title }}</h1>
-            <p class="mb-12 text-[#6c3524]">{{ $recipe->description }}</p>
+            <p class="mb-6 text-[#6c3524]">{{ $recipe->description }}</p>
+            <p class="mb-12 text-[#6c3524]">調理時間：{{ $recipe->cooking_time }}分</p>
             <h2 class="inline-block mb-6 text-3xl font-bold text-[#622d18]">材料<i class="fa-solid fa-carrot text-[#622d18]"></i></h2>
             <ul class="mb-12 bg-[#FFFAF4] text-[#6c3524] font-semibold">
-                @foreach(preg_split('/\r\n|\r|\n/', $recipe->ingredients) as $ingredient)
+                @foreach($recipe->ingredients as $ingredient)
                     <li class="mb-0.5">{{ $ingredient }}</li>
                 @endforeach
             </ul>
@@ -50,7 +60,9 @@
     </div>
     <div class="mx-20 mt-2 px-10">
         <h2 class="text-3xl font-bold mb-4 text-[#622d18]">作り方<i class="fa-solid fa-fire-burner"></i></h2>
-        <p class="mb-6 bg-[#FFFAF4] text-[#6c3524]">{!! nl2br(e($recipe->instructions)) !!}</p>
+        @foreach($recipe->instructions as $instruction)
+            <p class="mb-6 bg-[#FFFAF4] text-[#6c3524]">{{ $instruction }}</p>
+        @endforeach
         <h2 class="text-2xl font-bold mb-4">参考URL</h2>
         @if($recipe->reference_url)
             <a href="{{ $recipe->reference_url }}" class="text-lg font-semibold">{{ $recipe->reference_url }}</a>

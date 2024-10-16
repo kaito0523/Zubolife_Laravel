@@ -77,6 +77,8 @@ class ProfileController extends Controller
             'ingredients' => 'required|string',
             'instructions' => 'required|string',
             'reference_url' => 'nullable|url',
+            'cooking_time' => 'nullable|integer|min:0',
+            'has_dishes' => 'required|boolean',
         ]);
 
         if($request->hasFile('image')){
@@ -86,6 +88,8 @@ class ProfileController extends Controller
         $recipe->title = $request->title;
         $recipe->description = $request->description;
         $recipe->ingredients = $request->ingredients;
+        $recipe->cooking_time = $request->cooking_time;
+        $recipe->has_dishes = $request->has_dishes;
         $recipe->instruction = $request->instruction;
         $recipe->reference_url = $request->reference_url;
         $recipe->save();
