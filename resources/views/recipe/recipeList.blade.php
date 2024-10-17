@@ -1,7 +1,6 @@
 @extends('layouts.recipe')
 
 @section('content')
-    <!-- 背景画像設定 -->
     <div class="my-6 mx-20 flex items-center p-10" style="background-image: url('{{ asset('storage/your-image-file-path.jpg') }}'); background-size: cover; background-position: center;">
         <div class="relative">
                 <button type="button" id="filter-button" class="px-4 py-2 mr-4 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg">食材から絞り込む</button>
@@ -210,14 +209,12 @@
                     </form>
                 </div>                
             </div>
-        <!-- 検索フォーム -->
         <form action="{{ route('recipes.index') }}" method="GET" class="flex-grow relative mx-10">
             <input type="text" name="query" value="{{ isset($query) ? $query : '' }}" placeholder="料理名や食材名で検索する" class="w-full p-4 pr-12 border border-[#F1ECE6] bg-[#F1ECE6] rounded-lg placeholder-[#7F6042] text-[#7F6042] focus:outline-none focus:border-[#6c3524]" style="height: 70px;">
             <button type="submit" class="absolute right-0 top-0 mt-2 mr-2 px-4 py-2"><i class="fa-solid text-[#7F6042] text-3xl mb-10 fa-magnifying-glass"></i></button>
         </form>
     </div>
 
-    <!-- 検索結果の表示 -->
     <div class="flex">
         @if(isset($query) || !empty($ingredientNames))
             <h2 class="text-5xl flex font-bold mx-20 pl-20 my-4">
@@ -230,7 +227,7 @@
                 @endif
             </h2>
         @else
-            <h2 class="text-5xl flex font-bold mx-20 pl-20 my-4">お手軽レシピ一覧</h2>
+            <h2 class="text-5xl flex font-bold mx-20 pl-20 my-4 border-b-4]">お手軽レシピ一覧</h2>
             <a href="{{ route('recipes.create') }}" class="pb-8">
                 <div class="flex px-20 py-4 mx-20 bg-white text-[#FFC076] text-lg border-4 border-[#FFC076] rounded-xl font-bold shadow-[3px_3px_0px_#FFC076] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1">
                     あなたのかんたんレシピを投稿する
@@ -239,7 +236,6 @@
         @endif
     </div>
 
-    <!-- レシピカードのセクション -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mx-20 px-10">
         @if($recipes->isEmpty())
         <div class="my-20 w-auto pl-10">
@@ -258,17 +254,24 @@
                             </div>
                         @endif
                         <div class="p-4 flex-1 flex flex-col">
+                            <p>投稿日：{{ $recipe->updated_at->format('Y-m-d') }}</p>
+                            <p>調理時間：{{ $recipe->cooking_time }}分</p>
                             <h2 class="text-xl text-[#622d18] font-bold mb-4 line-clamp-2">{{ $recipe->title }}</h2>
                             <p class="text-sm text-[#6c3524] line-clamp-2 flex-grow">{{ $recipe->description }}</p>
                             <div class="flex">
                                 @if(!$recipe->has_dishes)
                                 <div class="flex">
-                                    <span class="border border-[#622d18] rounded-md p-1 mx-1 my-2 text-[#622d18]">洗い物なし</span>
+                                    <span class="border-2 border-[#FFC076] text-[#FFC076] rounded-md p-1 mx-1 my-2 text-[#622d18]">洗い物なし!</span>
                                 </div>
                                 @endif
                                 @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
                                 <div class="flex"> 
-                                    <span class="border border-[#622d18] rounded-md p-1 mx-1 my-2 text-[#622d18]">10分以内でできる</span>
+                                    <span class="border-2 border-[#FFC076] text-[#FFC076] rounded-md p-1 my-2 text-[#622d18]">10分以内でできる!</span>
+                                </div>
+                                @endif
+                                @if($recipe->ingredients->count() <= 3)
+                                <div>
+                                    <span class="border-2 border-[#FFC076] text-[#FFC076] rounded-md p-1 my-2 text-[#622d18]">材料3つ以内!</span>
                                 </div>
                                 @endif
                             </div>

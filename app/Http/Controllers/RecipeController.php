@@ -11,8 +11,8 @@ class RecipeController extends Controller
 {   
     public function index(Request $request)
     {   
-        $ingredientNames = $request->input('ingredients'); // 選択された材料のID（配列）
-        $query = $request->input('query'); // 検索キーワード
+        $ingredientNames = $request->input('ingredients'); 
+        $query = $request->input('query');
 
         $recipesQuery = Recipe::query();
 
