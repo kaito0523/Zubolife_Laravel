@@ -28,12 +28,12 @@
             <div>
                 <label for="cooking_time" class="block text-lg font-semibold mb-2">調理時間（分）</label>
                 <input type="number" name="cooking_time" id="cooking_time" value="{{ old('cooking_time', $recipe->cooking_time ?? '') }}" required
-                class="border border-[#E0E0E0] rounded-lg p3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                class="border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
             </div>
             
             <div class="mx-10">
                 <label for="has_dishes" class="block text-lg font-semibold mb-2">洗い物</label>
-                <select name="has_dishes" id="has_dishes" class="border border-[#E0E0E0] rounded-lg p3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                <select name="has_dishes" id="has_dishes" class="border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
                     <option value="1" {{ old('has_dishes', $recipe->has_dishes ?? '') == 1 ? 'selected' : '' }}>あり</option>
                     <option value="0" {{ old('has_dishes', $recipe->has_dishes ?? '') == 0 ? 'selected' : '' }}>なし</option>
                 </select>

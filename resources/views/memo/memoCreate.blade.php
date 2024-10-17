@@ -17,7 +17,7 @@
 
                 <div class="mb-4 border rounded-lg">
                     <label for="content" class="block text-sm font-medium text-gray-700"></label>
-                    <textarea name="content" id="content" rows="20" class="resize-none mt-1 block w-full p-2 rounded-md" required>{{ old('content', $content) }}</textarea>
+                    <textarea name="content" id="content" rows="20" class="resize-none mt-1 block w-full p-2 rounded-md" required>{{ old('content', implode("\n", $content)) }}</textarea>
                     @error('content')
                         <div>{{ $massage }}</div>
                     @enderror

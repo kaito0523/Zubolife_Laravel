@@ -25,7 +25,7 @@
             <h2 class="inline-block mb-6 text-3xl font-bold text-[#622d18]">材料<i class="fa-solid fa-carrot text-[#622d18]"></i></h2>
             <ul class="mb-12 bg-[#FFFAF4] text-[#6c3524] font-semibold">
                 @foreach($recipe->ingredients as $ingredient)
-                    <li class="mb-0.5">{{ $ingredient }}</li>
+                    <li class="mb-0.5">{{ $ingredient->name }}</li>
                 @endforeach
             </ul>
             <div class="mt-8 flex gap-8 justify-center">

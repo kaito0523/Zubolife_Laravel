@@ -32,7 +32,7 @@
     }
     </script>
 </head>
-<body class="font-sans text-[#424242] bg-[#FFFFFF]">
+<body class="font-sans text-[#424242] bg-[#FCFAF9]">
     <header class="bg-[#FFFFFF] sticky top-0 border-b-2 border-[#dcdddd] z-50">
         <nav class="p-5">
             <div class="container mx-auto flex justify-between items-center">
