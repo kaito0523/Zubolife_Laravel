@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('shopping_memos', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->string('title');
             $table->foreignId('user_id')->constrained()->OnDelete('cascade');
             $table->foreignId('recipe_id')->nullable()->constrained()->OnDelete('cascade');
             $table->timestamps();
