@@ -14,7 +14,28 @@ class RecipeController extends Controller
         $ingredientNames = $request->input('ingredients'); 
         $query = $request->input('query');
 
+        $no_dishes = $request->input('no_dishes');
+        $cooking_quick = $request->input('cooking_quick');
+        $ingredients_few = $request->input('ingredients_few');
+
         $recipesQuery = Recipe::query();
+
+        if($no_dishes){
+            $recipesQuery->where('has_dishes', false);
+        }
+
+        if($cooking_quick){
+            $recipesQuery->where('cooking_time', '<=', 10);
+        }
+
+        if($ingredients_few){
+            $recipesQuery->whereHas('ingredients', function($q) {
+                $q->select('ingredient_recipe.recipe_id')
+                    ->groupBy('ingredient_recipe.recipe_id')
+                    ->havingRaw('COUNT(ingredients_recipe->ingredient_id) <= 3');
+        
+            });
+        }
 
         if ($query) {
             $recipesQuery->where(function($q) use ($query) {

@@ -71,15 +71,15 @@
                     <div class="flex items-center space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)] ">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="font-bold hover:text-gray-300 mr-5">ログアウト</button>
+                            <button type="submit" class="font-md hover:text-gray-300 mr-5">ログアウト<i class="fa-solid fa-right-from-bracket"></i></button>
                         </form>
                         <a href="{{ route('profile.index') }}" 
                             class="{{ Request::routeIs('profile.index') ? 'border-b-2 border-[#FFAA85]' : '' }} hover:text-[#FFAA85]">
-                            MYプロフィール
+                            MYプロフィール<i class="fa-solid fa-id-card-clip"></i>
                         </a>
                     </div>
                     @else
-                    <div class="flex items-center space-x-4 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
+                    <div class="flex items-center space-x-4 font-md [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
                         <a href="{{ route('login.index') }}" 
                             class="{{ Request::routeIs('login.index') ? 'border-b-2 border-[#FFAA85]' : '' }} hover:text-[#FFAA85]">
                             ログイン
