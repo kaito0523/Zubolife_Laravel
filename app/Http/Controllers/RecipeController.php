@@ -32,7 +32,7 @@ class RecipeController extends Controller
             $recipesQuery->whereHas('ingredients', function($q) {
                 $q->select('ingredient_recipe.recipe_id')
                     ->groupBy('ingredient_recipe.recipe_id')
-                    ->havingRaw('COUNT(ingredients_recipe->ingredient_id) <= 3');
+                    ->havingRaw('COUNT(ingredient_recipe.ingredient_id) <= 3');
         
             });
         }
