@@ -47,7 +47,6 @@
                             <a href="{{ route('recipes.index') }}" 
                                 class="block px-4 pb-1 pt-2 transform text-lg transition hover:-translate-y-1">
                                 レシピ一覧 <i class="fa-solid fa-utensils"></i>
-                                <!-- 下線のエフェクト -->
                                 <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#FFC076] scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
                             </a>
                         </li>
@@ -79,13 +78,13 @@
                         </a>
                     </div>
                     @else
-                    <div class="flex items-center space-x-4 font-md [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
+                    <div class="flex items-center space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
                         <a href="{{ route('login.index') }}" 
-                            class="{{ Request::routeIs('login.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
-                            ログイン
+                            class="transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                            ログイン<i class="fa-solid fa-right-to-bracket"></i>
                         </a>
                         <a href="{{ route('register.index') }}" 
-                            class="{{ Request::routeIs('register.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                            class="transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             登録
                         </a>
                     </div>

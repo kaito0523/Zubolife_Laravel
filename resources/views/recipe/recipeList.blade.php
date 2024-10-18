@@ -1,229 +1,113 @@
 @extends('layouts.recipe')
 
 @section('content')
-    <div class="my-6 mx-20 flex items-center p-10" style="background-image: url('{{ asset('storage/your-image-file-path.jpg') }}'); background-size: cover; background-position: center;">
-        <div class="relative">
-                <button type="button" id="filter-button" class="px-4 py-2 mx-6 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg">食材から絞り込む</button>
-                <div id="filter-options" class="hidden absolute mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-50 w-96 max-width-200">
-                    <form action="{{ route('recipes.index') }}" method="GET" class="p-4">
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pr-4 whitespace-nowrap auto-cols-auto">
-                            <div>
-                                <input type="checkbox" name="no_dishes" value="キャベツ" class="mx-1">
-                                <label>洗い物なし</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="cooking_quick" value="トマト" class="mx-1">
-                                <label>10分以内でできる</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients_few" value="玉ねぎ" class="mx-1">
-                                <label>材料3つ以内</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="キャベツ" class="mx-1">
-                                <label>キャベツ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="トマト" class="mx-1">
-                                <label>トマト</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="玉ねぎ" class="mx-1">
-                                <label>玉ねぎ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="レタス" class="mx-1">
-                                <label>レタス</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="じゃがいも" class="mx-1">
-                                <label>じゃがいも</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="にんじん" class="mx-1">
-                                <label>にんじん</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ブロッコリー" class="mx-1">
-                                <label>ブロッコリー</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ピーマン" class="mx-1">
-                                <label>ピーマン</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="きゅうり" class="mx-1">
-                                <label>きゅうり</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ほうれん草" class="mx-1">
-                                <label>ほうれん草</label>
-                            </div>
-                        
-                            <!-- 果物類 -->
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="りんご" class="mx-1">
-                                <label>りんご</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="バナナ" class="mx-1">
-                                <label>バナナ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="みかん" class="mx-1">
-                                <label>みかん</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="いちご" class="mx-1">
-                                <label>いちご</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ぶどう" class="mx-1">
-                                <label>ぶどう</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="レモン" class="mx-1">
-                                <label>レモン</label>
-                            </div>
-                        
-                            <!-- 肉類 -->
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="鶏肉" class="mx-1">
-                                <label>鶏肉</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="豚肉" class="mx-1">
-                                <label>豚肉</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="牛肉" class="mx-1">
-                                <label>牛肉</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ベーコン" class="mx-1">
-                                <label>ベーコン</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ハム" class="mx-1">
-                                <label>ハム</label>
-                            </div>
-                            
-                            <!-- 魚介類 -->
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="鮭" class="mx-1">
-                                <label>鮭</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="まぐろ" class="mx-1">
-                                <label>まぐろ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="いか" class="mx-1">
-                                <label>いか</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="エビ" class="mx-1">
-                                <label>エビ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="かに" class="mx-1">
-                                <label>かに</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="あさり" class="mx-1">
-                                <label>あさり</label>
-                            </div>
-                            
-                            <!-- 調味料 -->
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="塩" class="mx-1">
-                                <label>塩</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="醤油" class="mx-1">
-                                <label>醤油</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="みりん" class="mx-1">
-                                <label>みりん</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="酒" class="mx-1">
-                                <label>酒</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="砂糖" class="mx-1">
-                                <label>砂糖</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="味噌" class="mx-1">
-                                <label>味噌</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="酢" class="mx-1">
-                                <label>酢</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="マヨネーズ" class="mx-1">
-                                <label>マヨネーズ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ケチャップ" class="mx-1">
-                                <label>ケチャップ</label>
-                            </div>
-                        
-                            <!-- その他の食材 -->
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="米" class="mx-1">
-                                <label>米</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="パスタ" class="mx-1">
-                                <label>パスタ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="パン" class="mx-1">
-                                <label>パン</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="チーズ" class="mx-1">
-                                <label>チーズ</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="卵" class="mx-1">
-                                <label>卵</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="牛乳" class="mx-1">
-                                <label>牛乳</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="バター" class="mx-1">
-                                <label>バター</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="ヨーグルト" class="mx-1">
-                                <label>ヨーグルト</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="豆腐" class="mx-1">
-                                <label>豆腐</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" name="ingredients[]" value="納豆" class="mx-1">
-                                <label>納豆</label>
+    <div class="my-6 mx-20 flex items-center p-10">
+        <div class="relative group">
+            <button type="button" id="filter-button" class="px-4 py-2 mx-6 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg">食材から絞り込む</button>
+            <div id="filter-options" class="hidden group-hover:block fixed top-10 left-10 w-1/2 h-auto bg-white border border-white rounded-lg shadow-xl z-50 overflow-auto">
+                <form action="{{ route('recipes.index') }}" method="GET" class="p-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pr-4">
+                        <div>
+                            <input type="checkbox" name="no_dishes" value="キャベツ" class="mx-1">
+                            <label>洗い物なし</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="cooking_quick" value="トマト" class="mx-1">
+                            <label>10分以内でできる</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="ingredients_few" value="玉ねぎ" class="mx-1">
+                            <label>材料3つ以内</label>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="font-bold">野菜</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><input type="checkbox" name="ingredients[]" value="キャベツ"><label>キャベツ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="トマト"><label>トマト</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="玉ねぎ"><label>玉ねぎ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="レタス"><label>レタス</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="じゃがいも"><label>じゃがいも</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="にんじん"><label>にんじん</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ブロッコリー"><label>ブロッコリー</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ピーマン"><label>ピーマン</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="きゅうり"><label>きゅうり</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ほうれん草"><label>ほうれん草</label></div>
                             </div>
                         </div>
-                        <div class="mt-4 flex justify-end">
-                            <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-lg">検索</button>
+                        <div class="col-span-2">
+                            <p class="font-bold">果物</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><input type="checkbox" name="ingredients[]" value="りんご"><label>りんご</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="バナナ"><label>バナナ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="みかん"><label>みかん</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="いちご"><label>いちご</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ぶどう"><label>ぶどう</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="レモン"><label>レモン</label></div>
+                            </div>
                         </div>
-                    </form>
-                </div>                
+                        <div class="col-span-2">
+                            <p class="font-bold">肉類</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><input type="checkbox" name="ingredients[]" value="鶏肉"><label>鶏肉</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="豚肉"><label>豚肉</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="牛肉"><label>牛肉</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ベーコン"><label>ベーコン</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ハム"><label>ハム</label></div>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="font-bold">魚介類</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><input type="checkbox" name="ingredients[]" value="鮭"><label>鮭</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="まぐろ"><label>まぐろ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="いか"><label>いか</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="エビ"><label>エビ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="かに"><label>かに</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="あさり"><label>あさり</label></div>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="font-bold">調味料</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><input type="checkbox" name="ingredients[]" value="塩"><label>塩</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="醤油"><label>醤油</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="みりん"><label>みりん</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="酒"><label>酒</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="砂糖"><label>砂糖</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="味噌"><label>味噌</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="酢"><label>酢</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="マヨネーズ"><label>マヨネーズ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ケチャップ"><label>ケチャップ</label></div>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="font-bold">その他の食材</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><input type="checkbox" name="ingredients[]" value="米"><label>米</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="パスタ"><label>パスタ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="パン"><label>パン</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="チーズ"><label>チーズ</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="卵"><label>卵</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="牛乳"><label>牛乳</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="バター"><label>バター</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="ヨーグルト"><label>ヨーグルト</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="豆腐"><label>豆腐</label></div>
+                                <div><input type="checkbox" name="ingredients[]" value="納豆"><label>納豆</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-lg">検索</button>
+                    </div>
+                </form>
             </div>
+        </div>
         <form action="{{ route('recipes.index') }}" method="GET" class="flex-grow relative mx-10">
             <input type="text" name="query" value="{{ isset($query) ? $query : '' }}" placeholder="料理名や食材名で検索する" class="w-full p-4 pr-12 border border-[#F1ECE6] bg-[#F1ECE6] rounded-lg placeholder-[#7F6042] text-[#7F6042] focus:outline-none focus:border-[#6c3524]" style="height: 70px;">
             <button type="submit" class="absolute right-0 top-0 mt-2 mr-2 px-4 py-2"><i class="fa-solid text-[#7F6042] text-3xl mb-10 fa-magnifying-glass"></i></button>
         </form>
+    </div>
+
     </div>
 
     <div class="flex">
@@ -262,19 +146,19 @@
                             <!-- タグを写真の上に配置 -->
                             <div class="absolute top-2 left-0 right-0 flex justify-center space-x-2 z-10">
                                 @if(!$recipe->has_dishes)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">洗い物なし!</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">洗い物なし!</span>
                                 @endif
                                 @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">10分以内</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">10分以内</span>
                                 @endif
                                 @if($recipe->ingredients->count() == 3)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料3つ</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">材料3つ</span>
                                 @endif
                                 @if($recipe->ingredients->count() == 2)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料2つ</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">材料2つ</span>
                                 @endif
                                 @if($recipe->ingredients->count() == 1)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料1つ</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">材料1つ</span>
                                 @endif
                             </div>
                             <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="w-full h-48 object-cover rounded-t-lg">
