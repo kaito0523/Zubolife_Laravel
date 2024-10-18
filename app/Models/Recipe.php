@@ -15,14 +15,12 @@ class Recipe extends Model
         'description',
         'cooking_time',
         'has_dishes',
-        'ingredients',
         'instructions',
         'reference_url',
         'user_id'
     ];
 
     protected $casts = [
-        'ingredients' => 'array',
         'instructions' => 'array',
         'has_dishes' => 'boolean',
     ];
@@ -40,5 +38,10 @@ class Recipe extends Model
     public function shoppingMemos()
     {
         return $this->hasMany(ShoppingMemo::class);
+    }
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class);
     }
 }

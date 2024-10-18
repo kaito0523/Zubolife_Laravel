@@ -28,12 +28,12 @@
             <div>
                 <label for="cooking_time" class="block text-lg font-semibold mb-2">調理時間（分）</label>
                 <input type="number" name="cooking_time" id="cooking_time" value="{{ old('cooking_time', $recipe->cooking_time ?? '') }}" required
-                class="border border-[#E0E0E0] rounded-lg p3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                class="border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
             </div>
             
             <div class="mx-10">
                 <label for="has_dishes" class="block text-lg font-semibold mb-2">洗い物</label>
-                <select name="has_dishes" id="has_dishes" class="border border-[#E0E0E0] rounded-lg p3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                <select name="has_dishes" id="has_dishes" class="border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
                     <option value="1" {{ old('has_dishes', $recipe->has_dishes ?? '') == 1 ? 'selected' : '' }}>あり</option>
                     <option value="0" {{ old('has_dishes', $recipe->has_dishes ?? '') == 0 ? 'selected' : '' }}>なし</option>
                 </select>
@@ -182,10 +182,9 @@
             const instructionItem = document.createElement('div');
             instructionItem.classList.add('instruction-item', 'flex', 'items-center', 'mb-2');
 
-            // 手順番号を表示する <span> 要素を作成
             const stepNumber = document.createElement('span');
             stepNumber.classList.add('mr-2');
-            stepNumber.textContent = ''; // 番号は後で更新
+            stepNumber.textContent = '';
 
             const input = document.createElement('input');
             input.type = 'text';
@@ -197,7 +196,6 @@
             removeButton.className = 'remove-instruction ml-2 text-red-500';
             removeButton.textContent = '✖';
 
-            // 手順番号、入力フィールド、削除ボタンを追加
             instructionItem.appendChild(stepNumber);
             instructionItem.appendChild(input);
             instructionItem.appendChild(removeButton);
@@ -210,7 +208,7 @@
         instructionsContainer.addEventListener('click', function (e) {
             if (e.target && e.target.matches('button.remove-instruction')) {
                 e.target.parentElement.remove();
-                updateInstructionNumbers(); // 手順番号を更新
+                updateInstructionNumbers();
             }
         });
 
@@ -224,7 +222,6 @@
             });
         }
 
-        // ページ読み込み時に手順番号を更新（必要に応じて）
         updateInstructionNumbers();
     });
 

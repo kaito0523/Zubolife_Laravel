@@ -13,6 +13,7 @@ Route::get('/login', fn() => view('auth.login'))->name('login.index');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/', [RecipeController::class, 'index']);
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('recipes/show/{id}', [RecipeController::class, 'show'])->name('recipes.show');
 
@@ -32,10 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/memos/{id}', [ShoppingMemoController::class, 'update'])->name('memos.update');
     Route::delete('memos/destroy/{id}', [ShoppingMemoController::class, 'destroy'])->name('memos.destroy');
 
+    Route::delete('/profile/recipes/{id}', [ProfileController::class, 'destroyRecipe'])->name('profile.destroyRecipe');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/profile/recipes/{id}/edit', [ProfileController::class, 'editRecipe'])->name('profile.editRecipe');
     Route::patch('/profile/recipes/{id}', [ProfileController::class, 'updateRecipe'])->name('profile.updateRecipe');
     Route::delete('/profile/recipes/{id}', [ProfileController::class, 'destroyRecipe'])->name('profile.destroyRecipe');
 });

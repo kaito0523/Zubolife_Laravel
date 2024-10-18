@@ -38,7 +38,7 @@ class ShoppingMemoController extends Controller
     {
         
             $recipe = Recipe::findOrFail($recipeId);
-            $content = $recipe->ingredients;
+            $content = $recipe->ingredients->pluck('name')->toArray();
             $date = now()->format('m月d日');
             return view('memo.memoCreate', compact('recipe', 'content', 'date'));
     }

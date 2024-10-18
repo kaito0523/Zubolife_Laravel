@@ -14,6 +14,9 @@ module.default = {
     './resources/views/favorite/recipeFavorite.blade.php',
     './resources/views/auth/login.blade.php',
     './resources/views/auth/register.blade.php',
+    './resources/views/layouts/recipe.blade.php',
+    './resources/views/layouts/favorite.blade.php',
+    './resources/views/layouts/memo.blade.php',
   ],
   theme: {
     extend: {},
