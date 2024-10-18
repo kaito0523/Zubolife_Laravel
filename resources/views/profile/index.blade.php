@@ -32,7 +32,7 @@
                                 </div>
                             </a>
                         </div>
-                        <form action="{{ route('profile.destroyRecipe', $recipe->id) }}" method="POST">
+                        <form action="{{ route('profile.destroyRecipe', $recipe->id) }}" method="POST" onsubmit="return confirmDelete()">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-[#E87B36] hover:bg-[#FFAA85] text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-300">
@@ -44,4 +44,9 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete() {
+            return confirm('本当にこのレシピを削除しますか？');
+        }
+    </script>
 @endsection

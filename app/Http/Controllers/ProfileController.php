@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use App\Models\User;
+use App\Models\Ingredient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -60,41 +61,6 @@ class ProfileController extends Controller
 
         return view('profile.recipeEdit', compact('recipe'));
 
-    }
-
-    public function updateRecipe(Request $request, $id)
-    {
-        $recipe = Recipe::findOrFail($id);
-
-        if($recipe->user_id !== Auth::id()){
-            abort(403, 'このレシピを更新する権限がありません');
-        }
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'description' => 'required|string',
-            'ingredients' => 'required|string',
-            'instructions' => 'required|string',
-            'reference_url' => 'nullable|url',
-            'cooking_time' => 'nullable|integer|min:0',
-            'has_dishes' => 'required|boolean',
-        ]);
-
-        if($request->hasFile('image')){
-            $imagePath = $request->file('image')->store('images', 'public');
-            $recipe->image = $imagePath;
-        }
-        $recipe->title = $request->title;
-        $recipe->description = $request->description;
-        $recipe->ingredients = $request->ingredients;
-        $recipe->cooking_time = $request->cooking_time;
-        $recipe->has_dishes = $request->has_dishes;
-        $recipe->instruction = $request->instruction;
-        $recipe->reference_url = $request->reference_url;
-        $recipe->save();
-
-        return redirect()->route('profile.index')->with('success', 'レシピを更新しました');
     }
 
     public function destroyRecipe($id)
