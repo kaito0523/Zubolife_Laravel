@@ -3,7 +3,7 @@
 @section('content')
     <div class="my-6 mx-20 flex items-center p-10" style="background-image: url('{{ asset('storage/your-image-file-path.jpg') }}'); background-size: cover; background-position: center;">
         <div class="relative">
-                <button type="button" id="filter-button" class="px-4 py-2 mr-4 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg">食材から絞り込む</button>
+                <button type="button" id="filter-button" class="px-4 py-2 mx-6 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg">食材から絞り込む</button>
                 <div id="filter-options" class="hidden absolute mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-50 w-96 max-width-200">
                     <form action="{{ route('recipes.index') }}" method="GET" class="p-4">
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pr-4 whitespace-nowrap auto-cols-auto">
@@ -240,7 +240,7 @@
         @else
             <h2 class="text-5xl flex font-bold mx-20 pl-20 my-4 border-b-4]">お手軽レシピ一覧</h2>
             <a href="{{ route('recipes.create') }}" class="pb-8">
-                <div class="flex px-20 py-4 mx-20 bg-white text-[#FFC076] text-lg border-4 border-[#FFC076] rounded-xl font-bold shadow-[3px_3px_0px_#FFC076] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1">
+                <div class="flex px-20 py-4 mx-20 bg-white text-orange-500 text-lg border-4 border-orange-500 rounded-xl font-bold shadow-[3px_3px_0px_theme(colors.orange.500)] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1">
                     あなたのかんたんレシピを投稿する
                 </div>
             </a>
@@ -256,12 +256,51 @@
         @foreach($recipes as $recipe)
             <div class="bg-[#FFFFFF] my-10 rounded-lg border border-[#E0E0E0] overflow-hidden transform transition hover:-translate-y-6 hover:scale-105 hover:shadow-lg"
                 style="box-shadow: 0 4px 10px rgba(170, 170, 170, 0.5);">
-                <a href="{{ route('recipes.show', $recipe->id) }}" class="flex flex-col h-full">
+                <a href="{{ route('recipes.show', $recipe->id) }}" class="flex flex-col h-full relative">
                     @if($recipe->image)
-                        <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="w-full h-48 object-cover rounded-t-lg">
+                        <div class="relative">
+                            <!-- タグを写真の上に配置 -->
+                            <div class="absolute top-2 left-0 right-0 flex justify-center space-x-2 z-10">
+                                @if(!$recipe->has_dishes)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">洗い物なし!</span>
+                                @endif
+                                @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">10分以内</span>
+                                @endif
+                                @if($recipe->ingredients->count() == 3)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料3つ</span>
+                                @endif
+                                @if($recipe->ingredients->count() == 2)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料2つ</span>
+                                @endif
+                                @if($recipe->ingredients->count() == 1)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料1つ</span>
+                                @endif
+                            </div>
+                            <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="w-full h-48 object-cover rounded-t-lg">
+                        </div>
                     @else
-                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-lg">
-                            <span>画像がありません</span>
+                        <div class="relative">
+                            <div class="absolute top-2 left-0 right-0 flex justify-center space-x-2 z-10">
+                                @if(!$recipe->has_dishes)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">洗い物なし</span>
+                                @endif
+                                @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">10分以内</span>
+                                @endif
+                                @if($recipe->ingredients->count() == 3)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料3つ</span>
+                                @endif
+                                @if($recipe->ingredients->count() == 2)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料2つ</span>
+                                @endif
+                                @if($recipe->ingredients->count() == 1)
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料1つ</span>
+                                @endif
+                            </div>
+                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-lg">
+                                <span>画像がありません</span>
+                            </div>
                         </div>
                     @endif
                     <div class="p-4 flex-1 flex flex-col">
@@ -270,20 +309,7 @@
                             <p class="flex text-sm text-gray-500 mb-2">調理時間：{{ $recipe->cooking_time }}分</p>
                         </div>
                         <h2 class="text-xl text-[#622d18] font-bold mb-2">{{ $recipe->title }}</h2>
-                        <p class="text-sm text-[#6c3524] font-md mb-2 line-clamp-2 ">{{ $recipe->description }}</p>
-                        
-                        <!-- タグのスタイル -->
-                        <div class="flex flex-wrap mt-auto space-x-2">
-                            @if(!$recipe->has_dishes)
-                                <span class="border-2 border-[#FFC076] text-[#FFC076] rounded-md px-2 py-1 my-1 text-sm">洗い物なし!</span>
-                            @endif
-                            @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
-                                <span class="border-2 border-[#FFC076] text-[#FFC076] rounded-md px-2 py-1 my-1 text-sm">10分以内でできる!</span>
-                            @endif
-                            @if($recipe->ingredients->count() <= 3)
-                                <span class="border-2 border-[#FFC076] text-[#FFC076] rounded-md px-2 py-1 my-1 text-sm">材料3つ以内!</span>
-                            @endif
-                        </div>
+                        <p class="text-sm text-[#6c3524] font-md mb-2 line-clamp-2">{{ $recipe->description }}</p>
                     </div>
                 </a>
             </div>

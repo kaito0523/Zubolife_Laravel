@@ -13,6 +13,7 @@ Route::get('/login', fn() => view('auth.login'))->name('login.index');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/', [RecipeController::class, 'index']);
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('recipes/show/{id}', [RecipeController::class, 'show'])->name('recipes.show');
 

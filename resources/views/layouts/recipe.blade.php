@@ -71,21 +71,21 @@
                     <div class="flex items-center space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)] ">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="font-md hover:text-gray-300 mr-5">ログアウト<i class="fa-solid fa-right-from-bracket"></i></button>
+                            <button type="submit" class="font-md mr-5 transition hover:-translate-y-1  hover:text-[#FFAA85]">ログアウト<i class="fa-solid fa-right-from-bracket"></i></button>
                         </form>
                         <a href="{{ route('profile.index') }}" 
-                            class="{{ Request::routeIs('profile.index') ? 'border-b-2 border-[#FFAA85]' : '' }} hover:text-[#FFAA85]">
+                            class="{{ Request::routeIs('profile.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             MYプロフィール<i class="fa-solid fa-id-card-clip"></i>
                         </a>
                     </div>
                     @else
                     <div class="flex items-center space-x-4 font-md [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
                         <a href="{{ route('login.index') }}" 
-                            class="{{ Request::routeIs('login.index') ? 'border-b-2 border-[#FFAA85]' : '' }} hover:text-[#FFAA85]">
+                            class="{{ Request::routeIs('login.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             ログイン
                         </a>
                         <a href="{{ route('register.index') }}" 
-                            class="{{ Request::routeIs('register.index') ? 'border-b-2 border-[#FFAA85]' : '' }} hover:text-[#FFAA85]">
+                            class="{{ Request::routeIs('register.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             登録
                         </a>
                     </div>
