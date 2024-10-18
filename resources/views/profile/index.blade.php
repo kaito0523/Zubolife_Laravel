@@ -32,9 +32,13 @@
                                 </div>
                             </a>
                         </div>
-                        <a href="{{ route('profile.editRecipe', $recipe->id) }}" class="bg-[#E87B36] hover:bg-[#FFAA85] text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-300">
-                            編集
-                        </a>
+                        <form action="{{ route('profile.destroyRecipe', $recipe->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-[#E87B36] hover:bg-[#FFAA85] text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-300">
+                                レシピを削除
+                            </button>
+                        </form>
                     </div>
                 @endforeach
             </div>
