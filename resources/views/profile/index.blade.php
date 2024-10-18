@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mx-auto max-w-4xl py-10">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-[#181411] mb-4">{{ $user->name }}さんのプロフィール</h1>
+            <h1 class="text-4xl font-bold text-[#181411] mb-4">{{ $user->name }}さんのプロフィール</h1>
             <p class="text-lg text-gray-600 mb-6">メールアドレス：{{ $user->email }}</p>
             <a href="{{ route('profile.edit') }}" class="text-[#FFAA85] hover:underline text-lg">プロフィールを編集</a>
         </div>

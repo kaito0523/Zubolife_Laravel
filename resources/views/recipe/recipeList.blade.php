@@ -262,19 +262,19 @@
                             <!-- タグを写真の上に配置 -->
                             <div class="absolute top-2 left-0 right-0 flex justify-center space-x-2 z-10">
                                 @if(!$recipe->has_dishes)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">洗い物なし!</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">洗い物なし!</span>
                                 @endif
                                 @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">10分以内</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">10分以内</span>
                                 @endif
                                 @if($recipe->ingredients->count() == 3)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料3つ</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">材料3つ</span>
                                 @endif
                                 @if($recipe->ingredients->count() == 2)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料2つ</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">材料2つ</span>
                                 @endif
                                 @if($recipe->ingredients->count() == 1)
-                                    <span class="block border-2 border-orange-500 text-orange-500 bg-[#F1ECE6] rounded-md px-2 py-1 text-sm">材料1つ</span>
+                                    <span class="block border-2 border-orange-500 text-orange-500 bg-white rounded-md px-2 py-1 text-sm">材料1つ</span>
                                 @endif
                             </div>
                             <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="w-full h-48 object-cover rounded-t-lg">
