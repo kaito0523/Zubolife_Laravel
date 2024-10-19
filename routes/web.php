@@ -15,15 +15,14 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::resource('recipes', RecipeController::class)->only(['index', 'show']);
+Route::resource('recipes', RecipeController::class)->except('edit', 'update'); //Controller内で個別にミドルウェアを適応させています
 
 Route::middleware('auth')->group(function () {
-    Route::resource('recipes', RecipeController::class)->only(['create', 'store', 'destroy']);
 
     Route::resource('favorites', FavoriteController::class)->only(['index', 'store', 'destroy']);
 
     Route::resource('memos', ShoppingMemoController::class)->except(['edit']);
     Route::get('memos/create/recipe/{recipeId}', [ShoppingMemoController::class, 'createFromRecipe'])->name('memos.createFromRecipe');
-    
+
     Route::resource('profile', ProfileController::class)->only(['index', 'edit', 'update']);
 });

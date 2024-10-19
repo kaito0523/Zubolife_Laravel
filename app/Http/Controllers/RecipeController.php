@@ -4,63 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use App\Models\Ingredient;
+use App\Services\RecipeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {   
+    protected $recipeService;
+
+    public function __construct(RecipeService $recipeService)
+    {
+        $this->recipeService = $recipeService;
+        $this->middleware('auth')->only(['create', 'store', 'destroy']);
+    }
+
     public function index(Request $request)
     {   
         $ingredientNames = $request->input('ingredients'); 
         $query = $request->input('query');
-
         $no_dishes = $request->input('no_dishes');
         $cooking_quick = $request->input('cooking_quick');
         $ingredients_few = $request->input('ingredients_few');
 
-        $recipesQuery = Recipe::query();
+        $recipes = $this->recipeService->getFilteredRecipes($ingredientNames, $query, $no_dishes, $cooking_quick, $ingredients_few);
 
-        if($no_dishes){
-            $recipesQuery->where('has_dishes', false);
-        }
-
-        if($cooking_quick){
-            $recipesQuery->where('cooking_time', '<=', 10);
-        }
-
-        if($ingredients_few){
-            $recipesQuery->whereHas('ingredients', function($q) {
-                $q->select('ingredient_recipe.recipe_id')
-                    ->groupBy('ingredient_recipe.recipe_id')
-                    ->havingRaw('COUNT(ingredient_recipe.ingredient_id) <= 3');
-        
-            });
-        }
-
-        if ($query) {
-            $recipesQuery->where(function($q) use ($query) {
-                $q->where('title', 'LIKE', "%{$query}%")
-                    ->orWhere('description', 'LIKE', "%{$query}%")
-                    ->orWhereHas('ingredients', function($q) use ($query) {
-                    $q->where('name', 'LIKE', "%{$query}%");
-                    });
-            });
-        }
-
-        if (!empty($ingredientNames)) {
-            $ingredientNamesFiltered = array_filter($ingredientNames);
-            if(!empty($ingredientNamesFiltered)){
-                $recipesQuery->whereHas('ingredients', function($q) use ($ingredientNamesFiltered) {
-                    $q->whereIn('name', $ingredientNamesFiltered);
-                }, '=', count($ingredientNamesFiltered));
-            }
-        }
-
-        $recipes = $recipesQuery->get();
-
-        $allIngredients = Ingredient::orderBy('name')->get();
-
-        return view('recipe.recipeList', compact('recipes', 'query', 'ingredientNames', 'allIngredients'));
+        return view('recipe.recipeList', compact('recipes', 'query', 'ingredientNames'));
     }
 
     public function show($id)
@@ -89,45 +57,15 @@ class RecipeController extends Controller
             'reference_url' => 'nullable|url',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')){
-            $imagePath = $request->file('image')->store('images', 'public');
-        }
-        $recipe = Recipe::create([
-            'title' => $request->title,
-            'image' => $imagePath,
-            'description' => $request->description,
-            'cooking_time' => $request->cooking_time,
-            'has_dishes' => $request->has_dishes,
-            'instructions' => $request->instructions,
-            'reference_url' => $request->reference_url,
-            'user_id' => auth()->id()
-        ]);
-
-        $ingredientIds = [];
-        foreach ($request->ingredients as $ingredientName) {
-            $ingredientName = trim($ingredientName);
-            if ($ingredientName == '') {
-                continue;
-            }
-            $ingredient = Ingredient::firstOrCreate(['name' => $ingredientName]);
-            $ingredientIds[] = $ingredient->id;
-        }
-
-        $recipe->ingredients()->attach($ingredientIds);
+        $this->recipeService->createRecipe($request->all());
 
         return redirect()->route('recipes.index');
     }
 
     public function destroy($id)
     {
-        $recipe = Recipe::findOrFail($id);
-
-        if($recipe->user_id !== Auth::id()){
-            abort(403, 'レシピを削除する権限がありません');
-        }
-
-        $recipe->delete();
+        
+        $this->recipeService->destroyRecipe($id);
 
         return redirect()->route('profile.index')->with('success', 'レシピを削除しました');
     }
