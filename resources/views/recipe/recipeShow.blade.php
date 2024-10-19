@@ -31,7 +31,7 @@
             <div class="mt-8 flex gap-8 justify-center">
                 @auth
                     @if(Auth::user()->favorites()->where('recipe_id', $recipe->id)->exists())
-                        <form action="{{ route('favorites.delete', $recipe->id) }}" method="POST">
+                        <form action="{{ route('favorites.destroy', $recipe->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type='submit' class="text-center py-4 px-8 font-bold rounded-xl text-[#ef857d] border-4 border-[#ef857d] shadow-[5px_5px_0px_#ef857d] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1 z-50 bg-white whitespace-nowrap">

@@ -7,35 +7,23 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/register', fn() => view('auth.register'))->name('register.index');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/login', fn() => view('auth.login'))->name('login.index');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::prefix('auth')->group(function () {
+    Route::get('/register', [AuthController::class, 'registerIndex'])->name('register.index');
+    Route::post('/register', [AuthController::class, 'registerStore'])->name('register.store');
+    Route::get('/login', [AuthController::class, 'loginIndex'])->name('login.index');
+    Route::post('/login', [AuthController::class, 'loginStore'])->name('login.store');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
-Route::get('/', [RecipeController::class, 'index']);
-Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
-Route::get('recipes/show/{id}', [RecipeController::class, 'show'])->name('recipes.show');
+Route::resource('recipes', RecipeController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
-    Route::post('recipes', [RecipeController::class, 'store'])->name('recipes.store');
+    Route::resource('recipes', RecipeController::class)->only(['create', 'store', 'destroy']);
 
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-    Route::post('/favorites/store/{recipeId}', [FavoriteController::class, 'store'])->name('favorites.store');
-    Route::delete('/favorites/delete/{recipeId}', [FavoriteController::class, 'delete'])->name('favorites.delete');
+    Route::resource('favorites', FavoriteController::class)->only(['index', 'store', 'destroy']);
 
-    Route::get('/memos', [ShoppingMemoController::class, 'index'])->name('memos.index');
-    Route::get('/memos/show/{id}', [ShoppingMemoController::class, 'show'])->name('memos.show');
-    Route::get('memos/create', [ShoppingMemoController::class, 'create'])->name('memos.create');
+    Route::resource('memos', ShoppingMemoController::class)->except(['edit']);
     Route::get('memos/create/recipe/{recipeId}', [ShoppingMemoController::class, 'createFromRecipe'])->name('memos.createFromRecipe');
-    Route::post('memos/store', [ShoppingMemoController::class, 'store'])->name('memos.store');
-    Route::patch('/memos/{id}', [ShoppingMemoController::class, 'update'])->name('memos.update');
-    Route::delete('memos/destroy/{id}', [ShoppingMemoController::class, 'destroy'])->name('memos.destroy');
-
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile/recipes/{id}', [ProfileController::class, 'updateRecipe'])->name('profile.updateRecipe');
-    Route::delete('/profile/recipes/{id}', [ProfileController::class, 'destroyRecipe'])->name('profile.destroyRecipe');
+    
+    Route::resource('profile', ProfileController::class)->only(['index', 'edit', 'update']);
 });

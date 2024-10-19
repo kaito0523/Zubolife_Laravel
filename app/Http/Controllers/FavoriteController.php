@@ -32,7 +32,7 @@ class FavoriteController extends Controller
         return back()->with('message', 'レシピをお気に入りに登録しました');
     }
 
-    public function delete($recipeId)
+    public function destroy($recipeId)
     {
         Auth::user()->favorites()->where('recipe_id', $recipeId)->delete();
 

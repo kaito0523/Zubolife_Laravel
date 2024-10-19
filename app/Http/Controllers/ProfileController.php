@@ -51,28 +51,4 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', 'プロフィールを更新しました。');
     }
 
-    public function editRecipe($id)
-    {
-        $recipe = Recipe::findOrFail($id);
-
-        if($recipe->user_id !== Auth::id()){
-            abort(403, 'このレシピを編集する権限がありません');
-        }
-
-        return view('profile.recipeEdit', compact('recipe'));
-
-    }
-
-    public function destroyRecipe($id)
-    {
-        $recipe = Recipe::findOrFail($id);
-
-        if($recipe->user_id !== Auth::id()){
-            abort(403, 'レシピを削除する権限がありません');
-        }
-
-        $recipe->delete();
-
-        return redirect()->route('profile.index')->with('success', 'レシピを削除しました');
-    }
 }

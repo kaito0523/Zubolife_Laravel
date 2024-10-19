@@ -9,7 +9,12 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function registerIndex()
+    {
+        return view('auth.register');
+    }
+
+    public function registerStore(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -28,7 +33,12 @@ class AuthController extends Controller
         return redirect()->route('recipes.index');
     }
 
-    public function login(Request $request)
+    public function loginIndex()
+    {
+        return view('auth.login');
+    }
+
+    public function loginStore(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',

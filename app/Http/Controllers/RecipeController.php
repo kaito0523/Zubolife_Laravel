@@ -118,4 +118,17 @@ class RecipeController extends Controller
 
         return redirect()->route('recipes.index');
     }
+
+    public function destroy($id)
+    {
+        $recipe = Recipe::findOrFail($id);
+
+        if($recipe->user_id !== Auth::id()){
+            abort(403, 'レシピを削除する権限がありません');
+        }
+
+        $recipe->delete();
+
+        return redirect()->route('profile.index')->with('success', 'レシピを削除しました');
+    }
 }
