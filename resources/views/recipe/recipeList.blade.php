@@ -192,7 +192,7 @@
                             <p class="flex pr-4 text-sm text-gray-500">{{ $recipe->updated_at->format('Y/m/d') }}</p>
                             <p class="flex text-sm text-gray-500 mb-2">調理時間：{{ $recipe->cooking_time }}分</p>
                         </div>
-                        <h2 class="text-xl text-[#622d18] font-bold mb-2">{{ $recipe->title }}</h2>
+                        <h2 class="text-xl text-[#622d18] font-bold mb-2 line-clamp-2">{{ $recipe->title }}</h2>
                         <p class="text-sm text-[#6c3524] font-md mb-2 line-clamp-2">{{ $recipe->description }}</p>
                     </div>
                 </a>

@@ -3,11 +3,20 @@
 @section('content')
 <div class="max-w-4xl mx-auto mt-12 px-6">
     <h1 class="text-5xl font-bold mb-12 text-center">あなたのかんたんレシピを投稿する</h1>
+    @if ($errors->any())
+                <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
     <form action="{{ route('recipes.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
 
         <div>
-            <label for="title" class="block text-lg font-semibold mb-2">料理名</label>
+            <label for="title" class="block text-2xl font-semibold mb-2">料理名</label>
             <input type="text" id="title" name="title" value="{{ old('title') }}" required
                 class="w-full border border-[#E0E0E0] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
             @error('title')
@@ -16,7 +25,7 @@
         </div>
 
         <div>
-            <label for="description" class="block text-lg font-semibold mb-2">説明</label>
+            <label for="description" class="block text-2xl font-semibold mb-2">説明</label>
             <input type="text" id="description" name="description" value="{{ old('description') }}" required
                 class="w-full border border-[#E0E0E0] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
             @error('description')
@@ -24,33 +33,39 @@
             @enderror
         </div>
 
-        <div class="flex">
-            <div>
-                <label for="cooking_time" class="block text-lg font-semibold mb-2">調理時間（分）</label>
-                <input type="number" name="cooking_time" id="cooking_time" value="{{ old('cooking_time', $recipe->cooking_time ?? '') }}" required
-                class="border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
-            </div>
-            
-            <div class="mx-10">
-                <label for="has_dishes" class="block text-lg font-semibold mb-2">洗い物</label>
-                <select name="has_dishes" id="has_dishes" class="border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
-                    <option value="1" {{ old('has_dishes', $recipe->has_dishes ?? '') == 1 ? 'selected' : '' }}>あり</option>
-                    <option value="0" {{ old('has_dishes', $recipe->has_dishes ?? '') == 0 ? 'selected' : '' }}>なし</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="image" class="block text-lg font-semibold mb-2">画像</label>
-                <input type="file" id="image" name="image"
-                    class="w-full border border-[#E0E0E0] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
-                @error('image')
-                    <div class="text-red-500 mt-2">{{ $message }}</div>
-                @enderror
+        <div>
+            <div class="flex flex-wrap mb-12 space-x-4">
+                <div class="flex-1 min-w-[200px]">
+                    <label for="cooking_time" class="block text-2xl font-semibold mb-2">調理時間（分）</label>
+                    <input type="number" name="cooking_time" id="cooking_time" value="{{ old('cooking_time', $recipe->cooking_time ?? '') }}" required
+                        class="w-full border border-[#E0E0E0] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                    @error('cooking_time')
+                        <div class="text-red-500 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="flex-1 min-w-[200px]">
+                    <label for="has_dishes" class="block text-2xl font-semibold mb-2">洗い物</label>
+                    <select name="has_dishes" id="has_dishes" class="w-full bg-white border border-[#E0E0E0] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                        <option value="1" {{ old('has_dishes', $recipe->has_dishes ?? '') == 1 ? 'selected' : '' }}>あり</option>
+                        <option value="0" {{ old('has_dishes', $recipe->has_dishes ?? '') == 0 ? 'selected' : '' }}>なし</option>
+                    </select>
+                    @error('has_dishes')
+                        <div class="text-red-500 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="flex-1 min-w-[200px]">
+                    <label for="image" class="block text-2xl font-semibold mb-2">画像</label>
+                    <input type="file" id="image" name="image"
+                        class="w-full border border-[#E0E0E0] bg-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                    @error('image')
+                        <div class="text-red-500 mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
         </div>
 
         <div>
-            <label for="ingredients" class="block text-lg font-semibold mb-2">材料</label>
+            <label for="ingredients" class="block text-2xl font-semibold mb-2">材料  (入力例"キャベツ：１玉")</label>
             <div id="ingredients-container">
                 @if(old('ingredients'))
                     @foreach(old('ingredients') as $ingredient)
@@ -71,7 +86,7 @@
                 @else
                     @for($i = 0; $i < 5; $i++)
                         <div class="ingredient-item flex items-center mb-2">
-                            <input type="text" name="ingredients[]" 
+                            <input type="text" name="ingredients[]"
                                 class="w-full border border-[#E0E0E0] rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
                             <button type="button" class="remove-ingredient ml-2 text-red-500">✖</button>
                         </div>
@@ -87,7 +102,7 @@
         
 
         <div>
-            <label class="block text-lg font-semibold mb-2">作り方</label>
+            <label class="block text-2xl font-semibold mb-2">作り方</label>
             <div id="instructions-container">
                 @if(old('instructions'))
                     @foreach(old('instructions') as $index => $instruction)
@@ -108,14 +123,12 @@
                         </div>
                     @endforeach
                 @else
-                    @for($i = 0; $i < 1; $i++)
-                        <div class="instruction-item flex items-center mb-2">
-                            <span class="mr-2">{{ $i + 1 }}.</span>
-                            <input type="text" name="instructions[]" 
-                                class="w-full border border-[#E0E0E0] rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
-                            <button type="button" class="remove-instruction ml-2 text-red-500">✖</button>
-                        </div>
-                    @endfor
+                    <div class="instruction-item flex items-center mb-2">
+                        <span class="mr-2">1.</span>
+                        <input type="text" name="instructions[]" 
+                            class="w-full border border-[#E0E0E0] rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]">
+                        <button type="button" class="remove-instruction ml-2 text-red-500">✖</button>
+                    </div>
                 @endif
             </div>
             <button type="button" id="add-instruction" 
@@ -189,6 +202,7 @@
             const input = document.createElement('input');
             input.type = 'text';
             input.name = 'instructions[]';
+            input.placeholder = '作り方を入力';
             input.className = 'w-full border border-[#E0E0E0] rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#FFAA85]';
 
             const removeButton = document.createElement('button');
@@ -224,6 +238,5 @@
 
         updateInstructionNumbers();
     });
-
 </script>
 @endsection

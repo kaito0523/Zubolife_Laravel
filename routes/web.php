@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->group(function () {
     Route::get('/register', [AuthController::class, 'registerIndex'])->name('register.index');
     Route::post('/register', [AuthController::class, 'registerStore'])->name('register.store');
-    Route::get('/login', [AuthController::class, 'loginIndex'])->name('login.index');
+    Route::get('/login', [AuthController::class, 'loginIndex'])->name('login');
     Route::post('/login', [AuthController::class, 'loginStore'])->name('login.store');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -18,7 +18,6 @@ Route::prefix('auth')->group(function () {
 Route::resource('recipes', RecipeController::class)->except('edit', 'update'); //Controller内で個別にミドルウェアを適応させています
 
 Route::middleware('auth')->group(function () {
-
     Route::resource('favorites', FavoriteController::class)->only(['index', 'store', 'destroy']);
 
     Route::resource('memos', ShoppingMemoController::class)->except(['edit']);

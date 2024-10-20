@@ -48,7 +48,7 @@
                     @endif
                 @endauth
                 @guest
-                    <a href="{{ route('login') }}" class="text-center py-4 px-8 font-bold rounded-xl text-[#fcc800] border-4 border-[#fcc800] shadow-[3px_3px_0px_#fcc800] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1 z-50 bg-white whitespace-nowrap">
+                    <a href="{{ route('login.index') }}" class="text-center py-4 px-8 font-bold rounded-xl text-[#fcc800] border-4 border-[#fcc800] shadow-[3px_3px_0px_#fcc800] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1 z-50 bg-white whitespace-nowrap">
                         お気に入りに追加
                     </a>
                 @endguest
@@ -62,7 +62,7 @@
         <h2 class="text-3xl font-bold mb-4 text-[#622d18]">作り方<i class="fa-solid fa-fire-burner"></i></h2>
         <ul class="bg-[#F1ECE6]">
             @foreach($recipe->instructions as $instruction)
-                <li class="mb-6 text-[#6c3524]">{{ $loop->iteration }}.{{ $instruction }}</li>
+                <li class="mb-6 text-[#6c3524]"><strong class="text-lg">{{ $loop->iteration }}.</strong>{{ $instruction }}</li>
             @endforeach
         </ul>
         <h2 class="text-2xl font-bold mb-4">参考URL</h2>

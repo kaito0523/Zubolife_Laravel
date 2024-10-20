@@ -20,14 +20,26 @@ class StoreRecipeRequest extends FormRequest
             'cooking_time' => 'required|integer|min:0|max:500',
             'has_dishes' => 'required|boolean',
             'ingredients' => 'required|array|min:1',
-            'ingredients.*' => 'string|max:35',
+            'ingredients.*' => 'nullable|max:35',
             'instructions' => 'required|array|min:1',
-            'instructions.*' => 'required|string|max:299',
+            'instructions.*' => 'nullable|string|max:299',
             'reference_url' => 'nullable|url',
         ];
     }
 
-    public function message()
+    public function validationOption()
+    {
+        $this->merge([
+            'ingredients' => array_filter($this->input('ingredients', []), function($value) {
+                return !is_null($value) && $value !== '';
+            }),
+            'instructions' => array_filter($this->input('instructions', []), function($value) {
+                return !is_null($value) && $value !== '';
+            }),
+        ]);
+    }
+
+    public function messages()
     {
         return [
             'title.required' => '料理名を入力してください',
@@ -57,12 +69,10 @@ class StoreRecipeRequest extends FormRequest
 
             'instructions.required' => '手順を1つ以上入力してください',
             'instructions.min' => '手順は1つ以上必要です',
-            'instructions.*.required' => '各手順を入力してください',
             'instructions.*.string' => '各手順は文字列でなければなりません',
             'instructions.*.max' => '各手順は299文字以内で入力してください',
 
             'reference_url.url' => '参照URLは有効なURL形式でなければなりません',
         ];
-        
     }
 }

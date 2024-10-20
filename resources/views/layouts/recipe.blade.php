@@ -79,7 +79,7 @@
                     </div>
                     @else
                     <div class="flex items-center space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
-                        <a href="{{ route('login.index') }}" 
+                        <a href="{{ route('login') }}" 
                             class="transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             ログイン<i class="fa-solid fa-right-to-bracket"></i>
                         </a>

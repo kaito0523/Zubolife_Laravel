@@ -30,7 +30,7 @@ class ShoppingMemoService
         ]);
     }
 
-    public function updateMemo($id, $data)
+    public function updateMemo($data, $id)
     {
         $memo = ShoppingMemo::findOrFail($id);
         $memo->title = $data['title'];

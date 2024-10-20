@@ -28,11 +28,17 @@
                 <div class="mb-4">
                     <label for="title" class="block text-sm font-medium text-gray-700"></label>
                     <input type="text" name="title" id="title" value="{{ old('title', $memo->title) }}" class="mt-1 font-bold text-2xl block w-full p-2 rounded-md" oninput="autoSave()">
+                    @error('title')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
                     <label for="content" class="block text-sm font-medium text-gray-700"></label>
                     <textarea name="content" id="content" rows="20" class="resize-none mt-1 block w-full p-2 rounded-md" oninput="autoSave()">{{ old('content', $memo->content) }}</textarea>
+                    @error('content')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
             </form>

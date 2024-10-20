@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Recipe;
+use App\Models\Favorite;
 use App\Models\Ingredient;
 
 class RecipeService
@@ -88,6 +89,8 @@ class RecipeService
             abort(403, 'レシピを削除する権限がありません');
         }
 
+        $recipe->favorites()->delete();
+        
         $recipe->delete();
 
         return true;

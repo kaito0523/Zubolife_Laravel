@@ -80,12 +80,12 @@
                     </div>
                     @else
                     <div class="flex items-center space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
-                        <a href="{{ route('login.index') }}" 
-                            class="{{ Request::routeIs('login.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                        <a href="{{ route('login') }}" 
+                            class="transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             ログイン<i class="fa-solid fa-right-to-bracket"></i>
                         </a>
                         <a href="{{ route('register.index') }}" 
-                            class="{{ Request::routeIs('register.index') ? 'border-b-2 border-[#FFAA85]' : '' }} transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                            class="transition hover:-translate-y-1 hover:text-[#FFAA85]">
                             登録
                         </a>
                     </div>

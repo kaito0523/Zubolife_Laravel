@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Models\Ingredient;
 use App\Services\RecipeService;
+use App\Http\Requests\Recipe\StoreRecipeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,24 +43,11 @@ class RecipeController extends Controller
         return view('recipe.recipeCreate');
     }
 
-    public function store(Request $request)
+    public function store(StoreRecipeRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'description' => 'required|string',
-            'cooking_time' => 'nullable|integer|min:0',
-            'has_dishes' => 'required|boolean',
-            'ingredients' => 'required|array|min:1',
-            'ingredients.*' => 'string|max:255',
-            'instructions' => 'required|array|min:1',
-            'instructions.*' => 'required|string|max:1000',
-            'reference_url' => 'nullable|url',
-        ]);
+        $this->recipeService->createRecipe($request->validated());
 
-        $this->recipeService->createRecipe($request->all());
-
-        return redirect()->route('recipes.index');
+        return redirect()->route('recipes.index')->with('message', 'レシピを作成しました');
     }
 
     public function destroy($id)
