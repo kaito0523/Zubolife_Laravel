@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\MemoRequest;
+namespace App\Http\Requests\Memo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreShoppingMemoRequest extends FormRequest
+class UpdateShoppingMemoRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Auth::check;
     }
 
     public function rules()
