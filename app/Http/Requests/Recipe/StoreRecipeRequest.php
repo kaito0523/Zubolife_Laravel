@@ -8,27 +8,61 @@ class StoreRecipeRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:48',
             'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'description' => 'required|string',
-            'cooking_time' => 'nullable|integer|min:0',
+            'description' => 'required|string|max:288',
+            'cooking_time' => 'required|integer|min:0|max:500',
             'has_dishes' => 'required|boolean',
             'ingredients' => 'required|array|min:1',
-            'ingredients.*' => 'string|max:255',
+            'ingredients.*' => 'string|max:35',
             'instructions' => 'required|array|min:1',
-            'instructions.*' => 'required|string|max:1000',
+            'instructions.*' => 'required|string|max:299',
             'reference_url' => 'nullable|url',
         ];
     }
 
     public function message()
     {
-        //
+        return [
+            'title.required' => '料理名を入力してください',
+            'title.string' => '料理名は文字列のみ入力してください',
+            'title.max' => '料理名は48文字以内で入力してください',
+
+            'image.file' => '画像はファイル形式でアップロードしてください',
+            'image.mimes' => '画像はjpeg、png、jpgのいずれかの形式でアップロードしてください',
+            'image.max' => '画像は2MB以下でアップロードしてください',
+
+            'description.required' => '説明を入力してください',
+            'description.string' => '説明は文字列で入力してください',
+            'description.max' => '説明は288文字以内で入力してください',
+
+            'cooking_time.required' => '調理時間を入力してください',
+            'cooking_time.integer' => '調理時間は整数で入力してください',
+            'cooking_time.min' => '調理時間は0以上で入力してください',
+            'cooking_time.max' => '調理時間は500以内で入力してください',
+
+            'has_dishes.required' => '洗い物の有無を選択してください',
+            'has_dishes.boolean' => '洗い物の有無は真偽値でなければなりません',
+
+            'ingredients.required' => '材料を1つ以上入力してください',
+            'ingredients.min' => '材料は1つ以上必要です',
+            'ingredients.*.string' => '各材料は文字列でなければなりません',
+            'ingredients.*.max' => '各材料は35文字以内で入力してください',
+
+            'instructions.required' => '手順を1つ以上入力してください',
+            'instructions.min' => '手順は1つ以上必要です',
+            'instructions.*.required' => '各手順を入力してください',
+            'instructions.*.string' => '各手順は文字列でなければなりません',
+            'instructions.*.max' => '各手順は299文字以内で入力してください',
+
+            'reference_url.url' => '参照URLは有効なURL形式でなければなりません',
+        ];
+        
     }
 }
