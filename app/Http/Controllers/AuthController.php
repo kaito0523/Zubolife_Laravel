@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\Auth\StoreRegisterRequest;
+use App\Http\Requests\Auth\StoreLoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -14,18 +16,14 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function registerStore(Request $request)
+    public function registerStore(StoreRegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
+        $validated = $request->validated();
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password, //モデルでハッシュ済み
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'], //モデルでハッシュ済み
         ]);
 
         Auth::login($user);
@@ -38,12 +36,9 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function loginStore(Request $request)
+    public function loginStore(StoreLoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
+        $credentials = $request->validated();
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
