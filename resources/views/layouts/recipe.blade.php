@@ -85,7 +85,7 @@
                         </a>
                         <a href="{{ route('register.index') }}" 
                             class="transition hover:-translate-y-1 hover:text-[#FFAA85]">
-                            登録
+                            登録<i class="fa-solid fa-user"></i>
                         </a>
                     </div>
                     @endauth

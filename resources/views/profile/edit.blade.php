@@ -4,7 +4,7 @@
 <div class="flex items-center justify-center min-h-screen bg-[#FCFAF9]">
     <div class="max-w-md w-full px-6 py-8 bg-white rounded-lg shadow-lg">
         <h1 class="text-4xl font-bold mb-12 text-center">プロフィール編集</h1>
-        <form action="{{ route('profile.update') }}" method="POST" class="space-y-6">
+        <form action="{{ route('profile.update', ['profile' => $user->id]) }}" method="POST" class="space-y-6">
             @csrf
             @method('PATCH')
             <div>

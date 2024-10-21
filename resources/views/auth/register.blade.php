@@ -65,7 +65,7 @@
     
             <div class="text-center">
                 <button type="submit" class="text-center py-4 mb-4 px-16 font-bold rounded-xl text-orange-500 border-4 border-orange-500 shadow-[3px_3px_0px_theme(colors.orange.500)] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1 z-50 bg-white">
-                    ログイン
+                    登録
                 </button>
             </div>
         </form>
