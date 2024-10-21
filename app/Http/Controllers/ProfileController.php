@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Ingredient;
+use App\Http\Requests\Profile\UpdateProfileRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -29,21 +30,17 @@ class ProfileController extends Controller
         return view('profile.edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(UpdateProfileRequest $request)
     {
         $user = Auth::user();
         
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id, 
-            'password' => 'nullable|min:6'
-        ]);
+        $validated = $request->validated();
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
 
-        if($request->password){
-            $user->password = bcrypt($request->password);
+        if($validated['password']){
+            $user->password = bcrypt($validated['password']);
         }
 
         $user->save();
@@ -51,28 +48,4 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', 'プロフィールを更新しました。');
     }
 
-    public function editRecipe($id)
-    {
-        $recipe = Recipe::findOrFail($id);
-
-        if($recipe->user_id !== Auth::id()){
-            abort(403, 'このレシピを編集する権限がありません');
-        }
-
-        return view('profile.recipeEdit', compact('recipe'));
-
-    }
-
-    public function destroyRecipe($id)
-    {
-        $recipe = Recipe::findOrFail($id);
-
-        if($recipe->user_id !== Auth::id()){
-            abort(403, 'レシピを削除する権限がありません');
-        }
-
-        $recipe->delete();
-
-        return redirect()->route('profile.index')->with('success', 'レシピを削除しました');
-    }
 }

@@ -5,7 +5,7 @@
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-[#181411] mb-4">{{ $user->name }}さんのプロフィール</h1>
             <p class="text-lg text-gray-600 mb-6">メールアドレス：{{ $user->email }}</p>
-            <a href="{{ route('profile.edit') }}" class="text-[#FFAA85] hover:underline text-lg">プロフィールを編集</a>
+            <a href="{{ route('profile.edit', ['profile' => $user->id]) }}" class="text-[#FFAA85] hover:underline text-lg">プロフィールを編集</a>
         </div>
         <div class="bg-white shadow-md rounded-lg p-6">
             <h2 class="text-2xl font-bold text-[#181411] text-center mb-6">あなたのレシピ一覧</h2>
@@ -32,7 +32,7 @@
                                 </div>
                             </a>
                         </div>
-                        <form action="{{ route('profile.destroyRecipe', $recipe->id) }}" method="POST" onsubmit="return confirmDelete()">
+                        <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST" onsubmit="return confirmDelete()">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-[#E87B36] hover:bg-[#FFAA85] text-white text-sm font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-300">

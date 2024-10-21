@@ -4,23 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\Auth\StoreRegisterRequest;
+use App\Http\Requests\Auth\StoreLoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function registerIndex()
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
+        return view('auth.register');
+    }
+
+    public function registerStore(StoreRegisterRequest $request)
+    {
+        $validated = $request->validated();
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'], //モデルでハッシュ済み
         ]);
 
         Auth::login($user);
@@ -28,12 +31,14 @@ class AuthController extends Controller
         return redirect()->route('recipes.index');
     }
 
-    public function login(Request $request)
+    public function loginIndex()
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
+        return view('auth.login');
+    }
+
+    public function loginStore(StoreLoginRequest $request)
+    {
+        $credentials = $request->validated();
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
