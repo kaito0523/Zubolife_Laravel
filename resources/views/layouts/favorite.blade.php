@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>ZuboLife</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
         <nav class="p-5">
             <div class="container mx-auto flex justify-between items-center">
                 <div class="font-bold text-2xl text-[#424242] [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
-                    <h1>Zubolife</h1>
+                    <h1>ZuboLife</h1>
                 </div>
                 <div class="flex items-center space-x-6">
                     <ul class="flex space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)] mr-8">
