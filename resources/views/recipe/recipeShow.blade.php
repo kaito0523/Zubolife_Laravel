@@ -16,6 +16,16 @@
                 @if($recipe->cooking_time !== null && $recipe->cooking_time <= 10)
                     <span class="badge badge-info">10分以内でできる</span>
                 @endif
+
+                @if($recipe->ingredients->count() == 3)
+                    <span class="badge">材料3つ</span>
+                @endif
+                @if($recipe->ingredients->count() == 2)
+                    <span class="badge">材料2つ</span>
+                @endif
+                @if($recipe->ingredients->count() == 1)
+                    <span class="badge">材料1つ</span>
+                @endif
             </div>
         </div>
         <div class="w-full md:w-1/2">

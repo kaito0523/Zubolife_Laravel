@@ -47,7 +47,6 @@
                             <a href="{{ route('recipes.index') }}" 
                                 class="block px-4 pb-1 pt-2 transform text-lg transition hover:-translate-y-1">
                                 レシピ一覧 <i class="fa-solid fa-utensils"></i>
-                                <!-- 下線のエフェクト -->
                                 <span class="absolute bottom-0 left-0 w-full h-[2px] bg-[#FFC076] scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
                             </a>
                         </li>
