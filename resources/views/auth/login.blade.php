@@ -46,7 +46,7 @@
                     <div class="text-red-500 mt-2">{{ $message }}</div>
                 @enderror
             </div>
-    
+            
             <div>
                 <label for="password" class="block text-lg font-semibold mb-2">パスワード</label>
                 <input type="password" id="password" name="password" required
@@ -55,12 +55,16 @@
                     <div class="text-red-500 mt-2">{{ $message }}</div>
                 @enderror
             </div>
-    
+            
             <div class="text-center">
-                <button type="submit" class="text-center py-4 mb-4 px-16 font-bold rounded-xl text-orange-500 border-4 border-orange-500 shadow-[3px_3px_0px_theme(colors.orange.500)] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1 z-50 bg-white">
+                <button type="submit" class="text-center py-4 my-2  px-16 font-bold rounded-xl text-orange-500 border-4 border-orange-500 shadow-[3px_3px_0px_theme(colors.orange.500)] transition duration-300 ease-in-out hover:shadow-none hover:translate-x-1 hover:translate-y-1 z-50 bg-white">
                     ログイン
                 </button>
             </div>
+
+            <div class="block text-center">
+                <a href="{{ route('register.index') }}" class="text-center border-b border-blue-400 text-blue-400 hover:text-blue-100 hover:border-blue-100">アカウントを作成する</a>
+            </div> 
         </form>
     </div>
 </body>

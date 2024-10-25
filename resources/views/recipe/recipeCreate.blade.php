@@ -65,7 +65,7 @@
         </div>
 
         <div>
-            <label for="ingredients" class="block text-2xl font-semibold mb-2">材料  (入力例"キャベツ：１玉")</label>
+            <label for="ingredients" class="block text-2xl font-semibold mb-2">材料  (入力例"しょうゆ：大さじ１")</label>
             <div id="ingredients-container">
                 @if(old('ingredients'))
                     @foreach(old('ingredients') as $ingredient)
