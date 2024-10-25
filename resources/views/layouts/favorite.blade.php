@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ZuboLife</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
@@ -13,21 +12,20 @@
     module.exports = {
         theme: {
             extend: {
-            colors: {
-            },
-            fontFamily: {
-                kosugi: ['"Kosugi Maru"', 'sans-serif'],
-                sans: ['"Noto Sans JP"', 'sans-serif'],
-                heading: ['"Roboto"', 'sans-serif'],
-                serif: ['"Noto Serif"', 'serif'],
-                merriweather: ['"Merriweather"', 'serif'],
-                Arial: ["Arial"],
-            },
+                colors: {},
+                fontFamily: {
+                    kosugi: ['"Kosugi Maru"', 'sans-serif'],
+                    sans: ['"Noto Sans JP"', 'sans-serif'],
+                    heading: ['"Roboto"', 'sans-serif'],
+                    serif: ['"Noto Serif"', 'serif'],
+                    merriweather: ['"Merriweather"', 'serif'],
+                    Arial: ["Arial"],
+                },
             },
         },
         variants: {
             extend: {
-            decorationColor: ['hover'],
+                decorationColor: ['hover'],
             },
         },
         plugins: [],
@@ -41,7 +39,12 @@
                 <div class="font-bold text-2xl text-[#424242] [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
                     <h1>ZuboLife</h1>
                 </div>
-                <div class="flex items-center space-x-6">
+                <div class="lg:hidden">
+                    <button id="menu-toggle" class="text-[#424242] focus:outline-none">
+                        <i class="fas fa-bars fa-2x"></i>
+                    </button>
+                </div>
+                <div id="menu" class="hidden lg:flex items-center space-x-6">
                     <ul class="flex space-x-6 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)] mr-8">
                         <li class="relative group">
                             <a href="{{ route('recipes.index') }}" 
@@ -91,10 +94,67 @@
                     @endauth
                 </div>
             </div>
+            <div id="mobile-menu" class="hidden lg:hidden">
+                <ul class="space-y-2 mt-4 font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_10%)]">
+                    <li class="relative group">
+                        <a href="{{ route('recipes.index') }}" 
+                            class="block px-4 py-2 transform text-lg transition hover:-translate-y-1">
+                            レシピ一覧 <i class="fa-solid fa-utensils"></i>
+                        </a>
+                    </li>
+                    <li class="relative group">
+                        <a href="{{ route('favorites.index') }}" 
+                            class="block px-4 py-2 text-lg transform transition hover:-translate-y-1">
+                            お気に入り <i class="fa-solid fa-star"></i>
+                        </a>
+                    </li>
+                    <li class="relative group">
+                        <a href="{{ route('memos.index') }}" 
+                            class="block px-4 py-2 transform text-lg transition hover:-translate-y-1">
+                            メモ一覧 <i class="fa-solid fa-file-pen"></i>
+                        </a>
+                    </li>
+                    @auth
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-left px-4 py-2 transition hover:-translate-y-1 hover:text-[#FFAA85]">ログアウト<i class="fa-solid fa-right-from-bracket"></i></button>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile.index') }}" 
+                            class="block px-4 py-2 transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                            MYプロフィール<i class="fa-solid fa-id-card-clip"></i>
+                        </a>
+                    </li>
+                    @else
+                    <li>
+                        <a href="{{ route('login') }}" 
+                            class="block px-4 py-2 transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                            ログイン<i class="fa-solid fa-right-to-bracket"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('register.index') }}" 
+                            class="block px-4 py-2 transition hover:-translate-y-1 hover:text-[#FFAA85]">
+                            登録<i class="fa-solid fa-user"></i>
+                        </a>
+                    </li>
+                    @endauth
+                </ul>
+            </div>
         </nav>
     </header>
     <div>
         @yield('content')
     </div>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>
