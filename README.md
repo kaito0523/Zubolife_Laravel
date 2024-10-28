@@ -1,66 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ZuboLife
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ZuboLifeは、一人暮らしの人に向けた、ズボラな生活をサポートするためのWebアプリケーションです。
 
-## About Laravel
+**URL**: [http://zuboralife.com/](http://zuboralife.com/)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### サービスの内容
+一人暮らしの人々が日常生活を効率的に管理できるよう、生活全般をサポートします。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### アプリのターゲット
+一人暮らしで、家事や生活管理に手間をかけずに済ませたいと考えている20〜30代の忙しい社会人や学生を想定しています。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 開発の動機
+自分自身も一人暮らしで生活管理に苦労しており、同じ悩みを持つ人々に役立つアプリを作りたいという思いから始まりました。
 
-## Learning Laravel
+### 工夫したことやこだわったこと
+一人暮らしの人々のニーズを分析し、「洗い物なし」や「調理時間」のタグを作成するなど、必要な機能を追加していきました。また、時には生活に本当に必要な機能のみに絞ることで、使いやすさを追求しました。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 苦労したこと
+ズボラなユーザーが気軽に使い続けられるよう、操作が煩雑にならないかを細かく検証し、ストレスを感じさせない設計にする点に苦労しました。使いやすさを損なわずに機能を整理し、シンプルさと便利さのバランスを取ることにこだわりました。
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 使用技術 (Technologies Used)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Docker**：アプリケーションのコンテナ化および依存関係の管理
+- **Docker Compose**：複数コンテナのオーケストレーション（Nginx、PHP、MySQL、Redisなど）
+- **PHP 8.3**：アプリケーションロジックの実装言語
+- **Laravel**：PHPフレームワーク、APIとデータベース処理のためのフレームワーク
+- **Nginx**：ウェブサーバおよびリバースプロキシ
+- **MySQL**：データベース
+- **Redis**：キャッシュやセッション管理のインメモリデータストア
+- **Tailwind CSS**：UIのスタイリング
+- **JavaScript**：クライアントサイドの操作とライブラリ管理
+- **Google Font API & Bootstrap Icons**：フォントとアイコン
+- **AWS (EC2)**：EC2でのアプリケーションホスティング
 
-## Laravel Sponsors
+## 機能一覧 (Features)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| 機能                         | 説明                                                                                                    | デモ                                                                                           |
+|------------------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| **ユーザー認証機能**         | ユーザー登録、ログイン、ログアウト機能。ゲストユーザーも閲覧可能だが、投稿やお気に入り機能はログインが必要 | <img src="README_pic/login.png" alt="authentication" width="550">                  |
+| **レシピ一覧表示**           | ホーム画面にユーザー投稿のレシピを一覧表示。各レシピには画像、名前、説明が表示                         | <img src="README_pic/recipeList.png" alt="recipeList" width="550">                           |
+| **レシピ詳細表示**           | レシピを選択すると詳細画面を表示。詳細には画像、名前、説明、材料、作り方、参考URLを含む               | <img src="README_pic/recipeShow.png" alt="recipeDetail" width="550">                       |
+| **レシピ投稿**               | ユーザーが新しいレシピを投稿可能。画像、名前、説明、材料、作り方を入力できるフォームを提供           | <img src="README_pic/recipeCreate.png" alt="recipePost" width="550">                           |
+| **レシピお気に入り機能**     | レシピをお気に入り登録してリストに保存。お気に入り登録したレシピの一覧表示                           | <img src="README_pic/recipeFavorite.png" alt="favorites" width="550">                             |
+| **買い物メモ作成機能**       | 材料を買い物メモに追加可能。メモには材料リストや自由に追加できるメモ欄が含まれる                     | <img src="README_pic/memoCreate.png" alt="memoAdd" width="550">                                 |
+| **買い物メモの管理**         | 作成した買い物メモをリストで表示。メモの編集、削除が可能                                             | <img src="README_pic/memoShow.png" alt="memoManage" width="550">                           |
+| **レシピ検索・フィルタリング**| 材料を基にレシピを検索・フィルタリング。複数の材料やタグでの絞り込みが可能                          | <img src="README_pic/filter.png" alt="searchFilter" width="550">                       |
+| **タグ機能**                 | レシピに「10分以内にできる」「材料3つ以内」などのタグを追加。簡単で素早く作れるレシピが検索可能     |                |
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## アプリの今後
 
-## Contributing
+ZuboLifeは本来、全ての一人暮らしの方々の生活を支えるアプリを目指していました。しかし、現段階ではレシピを投稿する機能だけに留まっています。将来的にはこの機能をアプリの一つとして,ユーザーの日常生活を総合的にサポートするプラットフォームへと成長させていきます。具体的には、以下の機能を考えています。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### スケジュール管理機能
 
-## Code of Conduct
+一人暮らしの方々が日々の家事を簡単に管理できるカレンダー機能を提供します。効率的な時間の使い方をサポートします。
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **カレンダー表示**: 直感的なカレンダーインターフェースで家事の予定を確認・追加・編集できます。
+- **週ごとの家事設定**: 毎週何曜日にどの家事を行うかを設定し、カレンダーを同期させ直感的に予定を把握できます。
 
-## Security Vulnerabilities
+### 家計簿機能
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+支出管理を簡単にし、節約を効率化するための家計簿機能を提供します。毎月の支出を把握しやすくするため、支出のカテゴリー分けやグラフ表示など、視覚的に分かりやすい機能も搭載予定です。
 
-## License
+- **自動計算**: 支出内容に基づいた費用を自動で計算し、収支の管理をサポートします。
+- **カテゴリー分け**: 食費、光熱費、娯楽費など、支出をカテゴリーごとに整理・管理できます。
+- **グラフ表示**: 月ごとの支出をグラフで視覚化し、節約状況を一目で確認できます。
+- **レポート機能**: 定期的な支出レポートを生成し、家計の見直しをサポートします。
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### データ分析とパーソナライズ
+
+ユーザーの利用データを分析し、個々のニーズに合わせたレシピ提案や節約アドバイスを提供します。これにより、ユーザー一人ひとりに最適なサポートを実現します。
+
+- **レシピ・献立提案**: 過去の閲覧履歴やお気に入りに基づいて、新しいレシピ・献立を提案します。
+- **節約アドバイス**: 支出データを分析し、効果的な節約方法をアドバイスします。
+
+ZuboLifeは、初期のレシピ投稿機能を基盤に、スケジュール管理や家計簿機能などの追加機能を通じて、一人暮らしの方々の生活をより豊かにサポートすることを目指しています。将来的には、ユーザーのニーズに応じた多様な機能を追加し、サービスへと成長させていきます。常に改善を重ね、ユーザーにとって使いやすく、価値のあるアプリを提供していく所存です。
+**ここまで読んでいただきありがとうございます。**
