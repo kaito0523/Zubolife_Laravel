@@ -1,6 +1,8 @@
 # ZuboLife
 
 ZuboLifeは、一人暮らしの人に向けた、ズボラな生活をサポートするためのWebアプリケーションです。
+**URL**
+http://zuboralife.com/
 
 ## 使用技術 (Technologies Used)
 
