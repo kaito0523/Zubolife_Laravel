@@ -24,7 +24,7 @@ ZuboLifeは、一人暮らしの人に向けた、ズボラな生活をサポー
 1. **レシピ一覧表示**  
    - ホーム画面にユーザー投稿のレシピを一覧表示
    - 各レシピには画像、名前、説明が表示
-   ![recipeList](README_GIF/recipelist.gif)
+   <img src="README_GIF/recipelist.gif" alt="recipeList" width="300">
 
 2. **レシピ詳細表示**  
    - レシピを選択すると詳細画面を表示
