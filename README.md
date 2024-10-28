@@ -1,66 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# プロジェクト名
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+このプロジェクトは料理レシピを管理し、簡単に閲覧・共有できるアプリケーションです。
 
-## About Laravel
+## 使用技術 (Technologies Used)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Docker**：アプリケーションのコンテナ化および依存関係の管理
+- **Docker Compose**：複数コンテナのオーケストレーション（Nginx、PHP、MySQL、Redisなど）
+- **PHP 8.3**：アプリケーションロジックの実装言語
+- **Laravel**：PHPフレームワーク、APIとデータベース処理のためのフレームワーク
+- **Nginx**：ウェブサーバおよびリバースプロキシ
+- **MySQL**：データベース
+- **Redis**：キャッシュやセッション管理のインメモリデータストア
+- **Tailwind CSS**：UIのスタイリング
+- **JavaScript**：クライアントサイドの操作とライブラリ管理
+- **Google Font API & Bootstrap Icons**：フォントとアイコン
+- **AWS (EC2)**：EC2でのアプリケーションホスティング
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 機能一覧 (Features)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **レシピ一覧表示**  
+   - ホーム画面にユーザー投稿のレシピを一覧表示
+   - 各レシピには画像、名前、説明が表示
 
-## Learning Laravel
+2. **レシピ詳細表示**  
+   - レシピを選択すると詳細画面を表示
+   - 詳細には画像、名前、説明、材料、作り方、参考URLを含む
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **レシピ投稿**  
+   - ユーザーが新しいレシピを投稿可能
+   - 画像、名前、説明、材料、作り方を入力できるフォームを提供
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. **レシピお気に入り機能**  
+   - レシピをお気に入り登録してリストに保存
+   - お気に入り登録したレシピの一覧表示
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. **買い物メモ作成機能**  
+   - 材料を買い物メモに追加可能
+   - メモには材料リストや自由に追加できるメモ欄が含まれる
 
-## Laravel Sponsors
+6. **買い物メモの管理**  
+   - 作成した買い物メモをリストで表示
+   - メモの編集、削除が可能
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7. **ユーザー認証機能**  
+   - ユーザー登録、ログイン、ログアウト機能
+   - ゲストユーザーも閲覧可能だが、投稿やお気に入り機能はログインが必要
 
-### Premium Partners
+8. **レシピ検索・フィルタリング**  
+   - 材料を基にレシピを検索・フィルタリング
+   - 複数の材料やタグでの絞り込みが可能
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+9. **タグ機能**  
+   - レシピに「10分以内にできる」「材料3つ以内」などのタグを追加
+   - タグを使ったフィルタリングにより、簡単で素早く作れるレシピが検索可能
+---
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+このアプリケーションを通して、料理レシピの管理・共有が効率化され、ユーザーが簡単にレシピを投稿・閲覧・保存できる環境を提供します。
