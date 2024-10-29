@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        path: .  # ワークスペースのルートにチェックアウト
+        fetch-depth: 0  # リポジトリ全体を取得
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -34,26 +37,18 @@ jobs:
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
           ./tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
 
-    - uses: actions/checkout@v3
-      with:
-        path: . # ワークスペースのルートにチェックアウト
-        fetch-depth: 0
-
-    - name: List project files
+    - name: List workspace structure
       run: |
         pwd
-        ls -la
-        ls -la tests
-
+        ls -R
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
-        ssh -i ~/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
+        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
           cd /home/ec2-user/zubolaapp
           docker-compose down
           docker-compose up -d --build
         EOF
-
