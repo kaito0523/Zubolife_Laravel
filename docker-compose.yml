@@ -1,0 +1,47 @@
+services:
+  zubolaapp-nginx:
+    container_name: "zubolaapp-nginx"
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    depends_on:
+      - zubolaapp-app
+    ports:
+      - "80:80"
+    volumes:
+      - ./zubolaapp:/src/zubolaapp
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  zubolaapp-app:
+    container_name: "zubolaapp-app"
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    depends_on:
+      - zubolaapp-mysql
+    volumes:
+      - ./zubolaapp:/src
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+
+  zubolaapp-mysql:
+    image: mysql:8.0.37
+    command: --max_allowed_packet=32505856
+    container_name: "zubolaapp-mysql"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=zubolaapp
+      - lower_case_table_names=2
+    ports:
+      - 3306:3306
+
+  zubolaapp-redis:
+    image: redis:alpine
+    container_name: "zubolaapp-redis"
+    ports:
+      - 16379:6379
+
+volumes:
+  mysql_data: 
