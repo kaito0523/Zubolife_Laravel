@@ -30,10 +30,12 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
         echo "Copying files to EC2..."
-        rsync -avz --chmod=D775,F664 --chown=ec2-user:ec2-user \
-          --rsync-path="mkdir -p /home/ec2-user/zubolaapp && rsync" \
-          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+        rrsync -avz --delete --chmod=D775,F664 --chown=ec2-user:ec2-user \
+        --no-perms -O \
+        --rsync-path="mkdir -p /home/ec2-user/zubolaapp && rsync" \
+        -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
+        ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
