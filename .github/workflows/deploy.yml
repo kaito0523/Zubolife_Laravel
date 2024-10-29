@@ -30,7 +30,7 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
         echo "Copying files to EC2..."
-        rrsync -avz --delete --chmod=D775,F664 --chown=ec2-user:ec2-user \
+        rsync -avz --delete --chmod=D775,F664 --chown=ec2-user:ec2-user \
         --no-perms -O \
         --rsync-path="mkdir -p /home/ec2-user/zubolaapp && rsync" \
         -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
