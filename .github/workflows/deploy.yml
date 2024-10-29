@@ -32,13 +32,13 @@ jobs:
         echo "Copying files to EC2 using rsync..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          "${GITHUB_WORKSPACE}/tests" ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+          ./tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
 
     - uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # リポジトリ全体をチェックアウト
+        path: . # ワークスペースのルートにチェックアウト
+        fetch-depth: 0
 
-        
     - name: List project files
       run: |
         pwd
