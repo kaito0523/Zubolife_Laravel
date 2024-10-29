@@ -30,9 +30,14 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
         echo "Copying files to EC2 using rsync..."
-        rsync -avz --no-perms --omit-dir-times --delete \
-          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          "${GITHUB_WORKSPACE}/tests" ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+        if [ -d "${GITHUB_WORKSPACE}/tests" ]; then
+          rsync -avz --no-perms --omit-dir-times --delete \
+            -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
+            "${GITHUB_WORKSPACE}/tests" ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+        else
+          echo "The tests directory does not exist."
+          exit 1
+        fi
         
     - name: List project files
       run: |
