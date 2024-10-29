@@ -29,10 +29,11 @@ jobs:
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
-        echo "Copying files to EC2..."
+        echo "Copying files to EC2 using rsync..."
         rsync -avz --no-perms --omit-dir-times --delete \
-        -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-        ./tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
+          "${GITHUB_WORKSPACE}/tests" ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
