@@ -1,4 +1,4 @@
-# ZuboLife テスト
+# ZuboLife
 
 ZuboLifeは、一人暮らしの人に向けた、ズボラな生活をサポートするためのWebアプリケーションです。
 
