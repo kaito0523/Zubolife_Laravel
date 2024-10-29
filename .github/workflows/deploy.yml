@@ -36,6 +36,7 @@ jobs:
           ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
 
     - name: Display rsync log
+      if: always()
       run: |
         cat rsync.log
 
