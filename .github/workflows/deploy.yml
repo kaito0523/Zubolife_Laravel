@@ -30,19 +30,20 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
         echo "Copying files to EC2 using rsync..."
-        if [ -d "${GITHUB_WORKSPACE}/tests" ]; then
-          rsync -avz --no-perms --omit-dir-times --delete \
-            -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-            "${GITHUB_WORKSPACE}/tests" ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
-        else
-          echo "The tests directory does not exist."
-          exit 1
-        fi
+        rsync -avz --no-perms --omit-dir-times --delete \
+          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
+          "${GITHUB_WORKSPACE}/tests" ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # リポジトリ全体をチェックアウト
+
         
     - name: List project files
       run: |
         pwd
-        ls -R "${GITHUB_WORKSPACE}"
+        ls -la
+        ls -la tests
 
 
     - name: SSH into EC2 and deploy with Docker Compose
