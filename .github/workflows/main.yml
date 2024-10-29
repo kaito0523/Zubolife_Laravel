@@ -25,9 +25,13 @@ jobs:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
-        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/aws_key.pem
-        chmod 600 ~/.ssh/aws_key.pem
-        scp -i ~/.ssh/aws_key.pem -o StrictHostKeyChecking=no -r ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+        echo "Setting up SSH key..."
+        mkdir -p /home/runner/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
+        chmod 600 /home/runner/.ssh/aws_key.pem
+        echo "Copying files to EC2..."
+        scp -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no -r ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
