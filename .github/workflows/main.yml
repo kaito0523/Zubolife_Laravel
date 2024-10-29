@@ -30,7 +30,7 @@ jobs:
         printf "%s" "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
         echo "Copying files to EC2..."
-        scp -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no -r ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+        scp -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no -r ./* ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
 
 
     - name: SSH into EC2 and deploy with Docker Compose
