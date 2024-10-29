@@ -30,10 +30,11 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
         echo "Copying files to EC2..."
-        rsync -avz -vv --delete --chmod=D775,F664 --chown=ec2-user:ec2-user \
-          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp \
-          > rsync.log 2>&1
+        rsync -avz --no-perms --delete --chmod=D775,F664 --chown=ec2-user:ec2-user \
+        --log-file=rsync.log \
+        -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
+        ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+
 
     - name: Display rsync log
       if: always()
