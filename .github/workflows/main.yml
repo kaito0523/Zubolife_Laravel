@@ -20,18 +20,17 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-1
 
-    - name: Copy files to EC2 using rsync
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        echo "Setting up SSH key..."
-        mkdir -p /home/runner/.ssh
-        printf "%s" "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
-        chmod 600 /home/runner/.ssh/aws_key.pem
-        echo "Copying files to EC2 using rsync..."
-        rsync -avz -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" . ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
-
+    - name: Copy files to EC2
+  env:
+    EC2_HOST: ${{ secrets.EC2_HOST }}
+    EC2_USER: ${{ secrets.EC2_USER }}
+  run: |
+    echo "Setting up SSH key..."
+    mkdir -p /home/runner/.ssh
+    echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
+    chmod 600 /home/runner/.ssh/aws_key.pem
+    echo "Copying files to EC2..."
+    rsync -avz -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
