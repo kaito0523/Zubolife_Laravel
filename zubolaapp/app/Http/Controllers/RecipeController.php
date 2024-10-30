@@ -6,6 +6,7 @@ use App\Models\Recipe;
 use App\Models\Ingredient;
 use App\Services\RecipeService;
 use App\Http\Requests\Recipe\StoreRecipeRequest;
+use App\Http\Requests\Recipe\UpdateRecipeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class RecipeController extends Controller
     public function __construct(RecipeService $recipeService)
     {
         $this->recipeService = $recipeService;
-        $this->middleware('auth')->only(['create', 'store', 'destroy']);
+        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index(Request $request)
@@ -48,6 +49,22 @@ class RecipeController extends Controller
         $this->recipeService->createRecipe($request->validated());
 
         return redirect()->route('recipes.index')->with('message', 'レシピを作成しました');
+    }
+
+    public function edit($id)
+    {
+        $recipe = Recipe::findOrFail($id);
+
+        return view('recipe.recipeEdit', compact('recipe'));
+    }
+
+    public function update(UpdateRecipeRequest $request, $id)
+    {
+        $recipe = Recipe::findOrFail($id);
+
+        $this->recipeService->updateRecipe($recipe, $request->validated());
+
+        return redirect()->route('recipes.show', $recipe->id)->with('message', 'レシピを更新しました');
     }
 
     public function destroy($id)
