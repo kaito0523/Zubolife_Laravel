@@ -13,7 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        path: .  # ワークスペースのルートにチェックアウト
         fetch-depth: 0  # リポジトリ全体を取得
 
     - name: Configure AWS credentials
@@ -23,35 +22,28 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-1
     
-    - name: List workspace structure
-      run: |
-        pwd
-        ls -R
-
     - name: Setup SSH key
       run: |
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
     
-    - name: Test SSH Connection with aws_key.pem
+    - name: Test SSH Connection
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
-        echo "Testing SSH connection with specified private key..."
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} "echo Connected successfully."
     
-    - name: Copy test folder to EC2
+    - name: Copy application files to EC2
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
-        echo "Copying test folder to EC2..."
+        echo "Copying application files to EC2..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
-
+          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp || { echo "rsync error occurred"; exit 1; }
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
@@ -60,10 +52,9 @@ jobs:
       run: |
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
           cd /home/ec2-user/zubolaapp
+          echo "Shutting down existing Docker containers..."
           docker-compose down
+          echo "Starting Docker containers with the latest changes..."
           docker-compose up -d --build
         EOF
 
-          docker-compose down  # 一旦停止
-          docker-compose up -d --build  # 最新の状態でビルドと起動
-        EOF
