@@ -22,11 +22,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-1
 
-    - name: List workspace structure
-      run: |
-        pwd
-        ls -R
-
     - name: Setup SSH key
       run: |
         mkdir -p /home/runner/.ssh
@@ -74,8 +69,8 @@ jobs:
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
           cd /home/ec2-user/zubolaapp
           echo "Shutting down existing Docker containers..."
-          docker-compose down
+          sudo docker-compose down
           echo "Starting Docker containers with the latest changes..."
-          docker-compose up -d --build
+          sudo docker-compose up -d --build
         EOF
 
