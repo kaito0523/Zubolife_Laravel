@@ -22,21 +22,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-1
-
-    - name: Setup SSH key
-      run: |
-        mkdir -p /home/runner/.ssh
-        echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
-        chmod 600 /home/runner/.ssh/aws_key.pem
-    
-    - name: Test SSH Connection
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        echo "Testing SSH connection..."
-        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} "echo Connected successfully."  
-
     
     - name: List workspace structure
       run: |
@@ -44,68 +29,19 @@ jobs:
         ls -R
 
 
-    - name: Create necessary directories on EC2
+    - name: Copy files to EC2
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
-        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
-          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/cache/data
-          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/sessions
-          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/testing
-          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/views
-          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/logs
-        EOF
-
-    - name: Set ownership and permissions on EC2
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
-          sudo chown -R ec2-user:ec2-user /home/ec2-user/zubolaapp
-          sudo chmod -R 755 /home/ec2-user/zubolaapp
-        EOF
-    
-    - name: Copy application files to EC2 (excluding tests and .gitignore files)
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        echo "Copying zubolaapp to EC2 (excluding test folder and .gitignore files)..."
-        rsync -avz --no-perms --omit-dir-times --delete \
-          --exclude 'tests' \
-          --exclude '*.gitignore' \
-          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/ || { echo "rsync error occurred"; exit 1; }
-
-
-    - name: Copy test folder to EC2
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        echo "Copying test folder to EC2..."
+        echo "Setting up SSH key..."
+        mkdir -p /home/runner/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
+        chmod 600 /home/runner/.ssh/aws_key.pem
+        echo "Copying files to EC2 using rsync..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
-
-
-    - name: Verify docker-compose.yml on EC2
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
-          echo "Checking files in /home/ec2-user/zubolaapp..."
-          ls -la /home/ec2-user/zubolaapp  # ディレクトリ内容を確認
-          if [ ! -f /home/ec2-user/zubolaapp/docker-compose.yml ]; then
-            echo "Error: docker-compose.yml not found in /home/ec2-user/zubolaapp"
-            exit 1
-          else
-            echo "docker-compose.yml found. Proceeding with deployment..."
-          fi
-        EOF
+          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
@@ -114,6 +50,10 @@ jobs:
       run: |
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
           cd /home/ec2-user/zubolaapp
+          docker-compose down
+          docker-compose up -d --build
+        EOF
+
           docker-compose down  # 一旦停止
           docker-compose up -d --build  # 最新の状態でビルドと起動
         EOF
