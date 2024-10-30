@@ -3,7 +3,7 @@
 @section('content')
 <div class="my-6 mx-4 md:mx-20 flex flex-col md:flex-row items-center p-4 md:p-10">
     <div class="relative group mb-4 md:mb-0">
-        <button type="button" id="filter-button" class="px-4 py-2 mx-0 md:mx-6 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg cursor-pointer">
+        <button type="button" id="filter-button" class="px-4 py-2 mx-0 md:mx-8 bg-white text-[#6c3524] border border-[#6c3524] rounded-lg cursor-pointer">
             食材から絞り込む
         </button>
         <div id="filter-options" class="hidden fixed top-20 md:top-10 left-0 md:left-10 w-full md:w-1/2 h-auto bg-white border border-white rounded-lg shadow-xl z-50 overflow-auto max-h-[500px] md:max-h-none md:overflow-visible">
