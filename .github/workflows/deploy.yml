@@ -36,28 +36,31 @@ jobs:
         ls -R
 
 
-    - name: Create missing directories on EC2
+    - name: Create necessary directories on EC2
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
-          mkdir -p /home/ec2-user/zubolaapp/storage/framework/testing
-          mkdir -p /home/ec2-user/zubolaapp/storage/framework/views
-          mkdir -p /home/ec2-user/zubolaapp/storage/logs
+          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/cache/data
+          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/sessions
+          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/testing
+          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/framework/views
+          mkdir -p /home/ec2-user/zubolaapp/zubolaapp/storage/logs
         EOF
     
-    - name: Copy application files to EC2 (excluding tests)
+    - name: Copy application files to EC2 (excluding tests and .gitignore files)
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
-        echo "Copying zubolaapp to EC2 (excluding test folder)..."
+        echo "Copying zubolaapp to EC2 (excluding test folder and .gitignore files)..."
         rsync -avz --no-perms --omit-dir-times --delete \
-          --exclude '/tests' \
+          --exclude 'tests' \
+          --exclude '*.gitignore' \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp || { echo "rsync error occurred"; exit 1; }
-    
+          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/zubolaapp || { echo "rsync error occurred"; exit 1; }
+
     - name: Copy test folder to EC2
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -66,7 +69,7 @@ jobs:
         echo "Copying test folder to EC2..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
+          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
 
 
 
