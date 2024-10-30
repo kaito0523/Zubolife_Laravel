@@ -29,7 +29,7 @@ jobs:
         ls -R
 
 
-    - name: Copy files to EC2
+    - name: Copy application files to EC2 (excluding tests)
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
@@ -38,10 +38,21 @@ jobs:
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
-        echo "Copying files to EC2 using rsync..."
+        echo "Copying zubolaapp to EC2 (excluding test folder)..."
         rsync -avz --no-perms --omit-dir-times --delete \
+          --exclude 'tests' \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
           ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
+  
+    - name: Copy test folder to EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        echo "Copying test folder to EC2..."
+        rsync -avz --no-perms --omit-dir-times --delete \
+          -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
+          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
