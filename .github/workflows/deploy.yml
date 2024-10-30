@@ -69,7 +69,8 @@ jobs:
           --exclude 'tests' \
           --exclude '*.gitignore' \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp || { echo "rsync error occurred"; exit 1; }
+          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/ || { echo "rsync error occurred"; exit 1; }
+
 
     - name: Copy test folder to EC2
       env:
@@ -98,7 +99,7 @@ jobs:
             echo "docker-compose.yml found. Proceeding with deployment..."
           fi
         EOF
-    
+
     - name: SSH into EC2 and deploy with Docker Compose
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
