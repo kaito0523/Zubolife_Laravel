@@ -69,6 +69,21 @@ jobs:
           ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests || echo "Some test files were not transferred."
 
 
+    - name: Verify docker-compose.yml on EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
+          # 確認: docker-compose.ymlが存在するか
+          if [ ! -f /home/ec2-user/zubolaapp/docker-compose.yml ]; then
+            echo "Error: docker-compose.yml not found in /home/ec2-user/zubolaapp"
+            exit 1
+          else
+            echo "docker-compose.yml found. Proceeding with deployment..."
+          fi
+        EOF
+    
     - name: SSH into EC2 and deploy with Docker Compose
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -76,6 +91,6 @@ jobs:
       run: |
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
           cd /home/ec2-user/zubolaapp
-          docker-compose down
-          docker-compose up -d --build
+          docker-compose down  # 一旦停止
+          docker-compose up -d --build  # 最新の状態でビルドと起動
         EOF
