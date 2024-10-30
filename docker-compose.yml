@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   zubolaapp-nginx:
     container_name: "zubolaapp-nginx"
@@ -9,7 +11,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./zubolaapp:/src/zubolaapp
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   zubolaapp-app:
@@ -20,7 +21,6 @@ services:
     depends_on:
       - zubolaapp-mysql
     volumes:
-      - ./zubolaapp:/src/zubolaapp
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
 
   zubolaapp-mysql:
@@ -44,4 +44,4 @@ services:
       - 16379:6379
 
 volumes:
-  mysql_data: 
+  mysql_data:
