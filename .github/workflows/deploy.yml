@@ -28,27 +28,30 @@ jobs:
         pwd
         ls -R
 
-    - name: Test SSH Connection with Debug
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
+    - name: Setup SSH key
       run: |
-        echo "Testing SSH connection with verbose debug information..."
-        ssh -vvv -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} "echo Connected successfully."
-
-    - name: Copy files to EC2
-      env:
-        EC2_HOST: ${{ secrets.EC2_HOST }}
-        EC2_USER: ${{ secrets.EC2_USER }}
-      run: |
-        echo "Setting up SSH key..."
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
-        echo "Copying files to EC2 using rsync..."
+    
+    - name: Test SSH Connection with aws_key.pem
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        echo "Testing SSH connection with specified private key..."
+        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} "echo Connected successfully."
+    
+    - name: Copy test folder to EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        echo "Copying test folder to EC2..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
+
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
