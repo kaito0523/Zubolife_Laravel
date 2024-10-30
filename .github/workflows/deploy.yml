@@ -69,7 +69,7 @@ jobs:
           --exclude 'tests' \
           --exclude '*.gitignore' \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/zubolaapp || { echo "rsync error occurred"; exit 1; }
+          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp || { echo "rsync error occurred"; exit 1; }
 
     - name: Copy test folder to EC2
       env:
@@ -89,7 +89,8 @@ jobs:
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
-          # 確認: docker-compose.ymlが存在するか
+          echo "Checking files in /home/ec2-user/zubolaapp..."
+          ls -la /home/ec2-user/zubolaapp  # ディレクトリ内容を確認
           if [ ! -f /home/ec2-user/zubolaapp/docker-compose.yml ]; then
             echo "Error: docker-compose.yml not found in /home/ec2-user/zubolaapp"
             exit 1
