@@ -41,9 +41,13 @@ jobs:
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
         echo "Copying application files to EC2..."
-        rsync -avz --no-perms --omit-dir-times --delete \
+        rsync -avzv --no-perms --omit-dir-times --delete \
+          --exclude='vendor' \
+          --exclude='node_modules' \
+          --exclude='storage' \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
           ./ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp || { echo "rsync error occurred"; exit 1; }
+
 
     - name: Verify docker-compose.yml on EC2
       env:
@@ -67,10 +71,28 @@ jobs:
         EC2_USER: ${{ secrets.EC2_USER }}
       run: |
         ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
+          # デプロイディレクトリへ移動
           cd /home/ec2-user/zubolaapp
+    
           echo "Shutting down existing Docker containers..."
           sudo docker-compose down
+    
+          echo "Installing Composer dependencies..."
+          sudo docker run --rm -v $(pwd):/app composer install --no-dev --optimize-autoloader
+    
           echo "Starting Docker containers with the latest changes..."
           sudo docker-compose up -d --build
+    
+          echo "Setting up storage link..."
+          # Dockerコンテナ内で php artisan storage:link を実行
+          sudo docker-compose exec zubolaapp-app php artisan storage:link
+    
+          echo "Navigating to /src/zubolaapp and setting up storage link..."
+          # /src/zubolaapp に移動して再度リンクを設定
+          cd /src/zubolaapp
+          php artisan storage:link
+    
+          echo "Deployment and setup completed successfully."
         EOF
+
 
