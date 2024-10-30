@@ -28,6 +28,14 @@ jobs:
         mkdir -p /home/runner/.ssh
         echo "${{ secrets.EC2_SSH_KEY }}" > /home/runner/.ssh/aws_key.pem
         chmod 600 /home/runner/.ssh/aws_key.pem
+    
+    - name: Test SSH Connection
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        echo "Testing SSH connection..."
+        ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} "echo Connected successfully."  
 
     
     - name: List workspace structure
@@ -80,8 +88,7 @@ jobs:
         echo "Copying test folder to EC2..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
-
+          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests || { echo "rsync error occurred for tests folder"; exit 1; }
 
 
     - name: Verify docker-compose.yml on EC2
