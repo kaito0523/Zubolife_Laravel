@@ -41,7 +41,7 @@ jobs:
         echo "Copying files to EC2 using rsync..."
         rsync -avz --no-perms --omit-dir-times --delete \
           -e "ssh -i /home/runner/.ssh/aws_key.pem -o StrictHostKeyChecking=no" \
-          ./zubolaapp/tests ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp/tests
+          ./zubolaapp/ ${EC2_USER}@${EC2_HOST}:/home/ec2-user/zubolaapp
 
     - name: SSH into EC2 and deploy with Docker Compose
       env:
