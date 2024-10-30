@@ -138,9 +138,10 @@
         </div>
         @else
         @foreach($recipes as $recipe)
+        <a href="{{ route('recipes.edit', $recipe->id) }}"><p>編集</p></a>
             <div class="bg-[#FFFFFF] my-6 md:my-10 rounded-lg border border-[#E0E0E0] overflow-hidden transform transition hover:-translate-y-6 hover:scale-105 hover:shadow-lg"
                 style="box-shadow: 0 4px 10px rgba(170, 170, 170, 0.5);">
-                <a href="{{ route('recipes.show', $recipe->id) }}" class="flex flex-col h-full relative">
+                    <a href="{{ route('recipes.show', $recipe->id) }}" class="flex flex-col h-full relative">
                     @if($recipe->image)
                         <div class="relative">
                             <div class="absolute top-2 left-0 right-0 flex justify-start md:justify-center space-x-2 z-10 px-2">

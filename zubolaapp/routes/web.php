@@ -16,7 +16,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('/', [RecipeController::class, 'index']);
-Route::resource('recipes', RecipeController::class)->except('edit', 'update'); //Controller内で個別にミドルウェアを適応させています
+Route::resource('recipes', RecipeController::class); //Controller内で個別にミドルウェアを適応させています
 
 Route::middleware('auth')->group(function () {
     Route::resource('favorites', FavoriteController::class)->only(['index', 'destroy']);
